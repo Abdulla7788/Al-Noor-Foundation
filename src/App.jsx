@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 // STYLES - All CSS from the original file is placed here
 const GlobalStyles = () => (
@@ -63,6 +63,7 @@ const GlobalStyles = () => (
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        text-decoration: none; /* Added for <a> tags */
     }
     .btn:disabled {
         opacity: 0.7;
@@ -167,6 +168,11 @@ const GlobalStyles = () => (
         margin: 0 0.75rem;
         transition: color 0.3s;
         font-weight: 500;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        text-decoration: none;
     }
     html.light .nav-link { color: var(--color-text-light); }
     html.light .nav-link:hover { color: var(--color-accent-light); }
@@ -426,6 +432,7 @@ const GlobalStyles = () => (
         display: block;
         padding: 0.75rem 1rem;
         white-space: nowrap;
+        text-decoration: none;
     }
 
 
@@ -531,8 +538,8 @@ const HomePage = ({ onNavigate }) => (
                 <h1 className="text-4xl md:text-7xl font-extrabold leading-tight mb-4 tracking-tighter">Serving Humanity, Spreading Light</h1>
                 <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-slate-300">Al-Noor Foundation is committed to creating lasting change through education, healthcare, and relief programs for communities in need.</p>
                 <div className="space-x-4">
-                    <button onClick={() => onNavigate('involved')} className="btn btn-primary">Join Us</button>
-                    <button onClick={() => onNavigate('donate')} className="btn btn-secondary">Donate Now</button>
+                    <a href="#involved" onClick={(e) => { e.preventDefault(); onNavigate('involved'); }} className="btn btn-primary">Join Us</a>
+                    <a href="#donate" onClick={(e) => { e.preventDefault(); onNavigate('donate'); }} className="btn btn-secondary">Donate Now</a>
                 </div>
             </div>
         </div>
@@ -547,7 +554,7 @@ const HomePage = ({ onNavigate }) => (
                         <p className="text-gray-700 dark:text-gray-300">We believe in a hands-on approach, working directly with local partners to ensure our efforts are effective and culturally sensitive.</p>
                     </FadeInSection>
                     <FadeInSection>
-                        <img src="https://www.google.com/maps/place/Al+Noor+Foundation/@16.5989987,79.7379586,3a,75y,90t/data=!3m11!1e2!3m9!1sCIABIhDBcWVLVIvpe_ir1irLs6qg!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fgps-cs-s%2FAC9h4nrNwD9ykw9PZWppLpJWKzmNHwIhPMimVdHzR9bxXtJXm0UuEpK4foVhyaNsg5GDclzAsYieWjXb9Ifwcnp0-cpUGoX82HR3Fk7z6QM_V-qK1s8rUsIwv-Mg4c6pDdI-AW99_UNmjuUDUCFm%3Dw222-h100-k-no!7i4080!8i1830!9m2!1b1!2i49!4m7!3m6!1s0x3a3541005fef2859:0x25acd389325f1ca7!8m2!3d16.5989842!4d79.7380214!10e5!16s%2Fg%2F11xcnkh9gh?entry=ttu&g_ep=EgoyMDI1MTAwOC4wIKXMDSoASAFQAw%3D%3D#" alt="Community Empowerment" className="rounded-xl shadow-2xl w-full h-full object-cover" />
+                        <img src="https://images.unsplash.com/photo-1620121684840-3ff6ff5738d3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Community Empowerment" className="rounded-xl shadow-2xl w-full h-full object-cover" />
                     </FadeInSection>
                 </div>
             </div>
@@ -667,7 +674,7 @@ const ProgramsPage = () => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Education Support</h3>
                             <p className="text-gray-700 dark:text-gray-300 mb-4">Providing scholarships, school supplies, and digital learning centers to underprivileged students.</p>
-                            <a href="#" className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300">Learn More <i className="fas fa-arrow-right ml-1"></i></a>
+                            <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Learn More <i className="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </FadeInSection>
@@ -677,7 +684,7 @@ const ProgramsPage = () => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Health Camps</h3>
                             <p className="text-gray-700 dark:text-gray-300 mb-4">Organizing free medical camps in remote areas, offering check-ups, medicines, and health awareness.</p>
-                             <a href="#" className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300">Learn More <i className="fas fa-arrow-right ml-1"></i></a>
+                             <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Learn More <i className="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </FadeInSection>
@@ -687,7 +694,7 @@ const ProgramsPage = () => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Food & Shelter Programs</h3>
                             <p className="text-gray-700 dark:text-gray-300 mb-4">Distributing nutritious meals and providing safe shelter for homeless individuals and families.</p>
-                             <a href="#" className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300">Learn More <i className="fas fa-arrow-right ml-1"></i></a>
+                             <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Learn More <i className="fas fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </FadeInSection>
@@ -819,15 +826,24 @@ const DonatePage = () => {
     const renderAmountSelection = () => (
          <>
             <h2 className="text-2xl font-bold mb-6 text-center">Donate Securely</h2>
-             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
-                <div className="md:col-span-3">
-                    <h3 className="text-lg font-semibold text-center mb-4">Pay Online via Card, UPI, Netbanking</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <div className="text-center">
+                     <h3 className="text-lg font-semibold text-center mb-4">Scan & Pay with UPI</h3>
+                     <div className="flex justify-center p-2 bg-white rounded-lg shadow-inner">
+                        <img src="/qr-code.jpg" alt="UPI Payment QR Code" className="w-48 h-48 rounded-md" />
+                     </div>
+                     <p className="text-sm mt-2 text-gray-500 dark:text-gray-400">Use any UPI app like GPay, PhonePe, Paytm</p>
+                </div>
+                
+                <div className="md:border-l-2 border-gray-200 dark:border-gray-700 md:pl-8">
+                    <h3 className="text-lg font-semibold text-center mb-4">Or Pay Online</h3>
+                    <div className="grid grid-cols-2 gap-4 mb-6">
                         {presetAmounts.map(preset => (
                             <button
                                 key={preset}
                                 onClick={() => handleAmountClick(preset)}
-                                className={`p-4 border-2 rounded-lg text-lg font-bold transition-colors ${amount === preset && !customAmount ? 'bg-yellow-400 text-black border-yellow-400' : 'hover:bg-yellow-400 hover:text-black hover:border-yellow-400 dark:border-gray-600 dark:hover:border-yellow-400'}`}
+                                className={`p-3 border-2 rounded-lg text-md font-bold transition-colors ${amount === preset && !customAmount ? 'bg-yellow-400 text-black border-yellow-400' : 'hover:bg-yellow-400 hover:text-black hover:border-yellow-400 dark:border-gray-600 dark:hover:border-yellow-400'}`}
                             >
                                 ₹{preset}
                             </button>
@@ -843,25 +859,12 @@ const DonatePage = () => {
                     {amountError && <p className="text-red-500 text-sm text-center mb-4">{amountError}</p>}
                     
                     <div className="mt-6 text-center">
-                         <button onClick={displayRazorpay} disabled={!!amountError || amount < 100} className="btn btn-primary w-full md:w-auto">
+                         <button onClick={displayRazorpay} disabled={!!amountError || amount < 100} className="btn btn-primary w-full">
                             Donate ₹{amount} with Razorpay
                         </button>
                     </div>
                 </div>
 
-                <div className="hidden md:flex flex-col items-center justify-center h-full">
-                    <div className="h-24 w-px bg-gray-300 dark:bg-gray-600"></div>
-                    <span className="my-4 font-bold text-gray-500">OR</span>
-                    <div className="h-24 w-px bg-gray-300 dark:bg-gray-600"></div>
-                </div>
-
-                <div className="md:col-span-2 text-center">
-                     <h3 className="text-lg font-semibold text-center mb-4">Scan & Pay with UPI</h3>
-                     <div className="flex justify-center p-2 bg-white rounded-lg shadow-inner">
-                        <img src="/qr-code.jpg" alt="UPI Payment QR Code" className="w-48 h-48 rounded-md" />
-                     </div>
-                     <p className="text-sm mt-2 text-gray-500 dark:text-gray-400">Use any UPI app like GPay, PhonePe, Paytm</p>
-                </div>
             </div>
         </>
     );
@@ -883,7 +886,7 @@ const DonatePage = () => {
                 <h1 className="section-title">Make a Difference</h1>
                 <p className="section-subtitle">Your donation empowers us to continue our work and bring hope to those who need it most.</p>
                 <FadeInSection>
-                    <div className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl transition-all duration-500">
+                    <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl transition-all duration-500">
                         {viewState === 'amount_selection' && renderAmountSelection()}
                         {viewState === 'success' && renderSuccessState()}
                     </div>
@@ -906,7 +909,7 @@ const EventsPage = () => (
                         <p className="text-sm text-yellow-500 font-semibold mb-1">UPCOMING: DEC 15, 2025</p>
                         <h3 className="text-2xl font-bold mb-2">Annual Charity Gala 2025</h3>
                         <p className="text-gray-700 dark:text-gray-300 mb-4">Join us for an evening of inspiration and fundraising to support our programs for the upcoming year.</p>
-                        <a href="#" className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300">Register Now <i className="fas fa-arrow-right ml-1"></i></a>
+                        <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Register Now <i className="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
             </FadeInSection>
@@ -917,7 +920,7 @@ const EventsPage = () => (
                         <p className="text-sm text-gray-500 font-semibold mb-1">NEWS: NOV 02, 2025</p>
                         <h3 className="text-2xl font-bold mb-2">Successful Health Camp in Rural Areas</h3>
                         <p className="text-gray-700 dark:text-gray-300 mb-4">Our recent health camp provided medical assistance to over 500 individuals, a major milestone for our healthcare initiative.</p>
-                         <a href="#" className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300">Read More <i className="fas fa-arrow-right ml-1"></i></a>
+                         <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Read More <i className="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
             </FadeInSection>
@@ -1100,9 +1103,9 @@ const ContactPage = () => {
                             <div className="mt-8">
                                 <h4 className="font-bold mb-4">Follow Us</h4>
                                 <div className="flex space-x-4">
-                                    <a href="#" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-facebook"></i></a>
-                                    <a href="#" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-twitter"></i></a>
-                                    <a href="#" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-instagram"></i></a>
+                                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-facebook"></i></a>
+                                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-twitter"></i></a>
+                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -1114,7 +1117,8 @@ const ContactPage = () => {
                         <h2 className="section-title">Our Location</h2>
                         <div className="overflow-hidden rounded-xl shadow-2xl">
                              <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15334.26422055622!2d79.73461865!3d16.5925433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3562c11e742e97%3A0x334b51a4413346d!2sMadinapadu%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1665412345678!5m2!1sen!2sin"
+                                title="Google Maps Location of Madinapadu Village"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61346.5336302325!2d79.70732158443916!3d16.59695671510255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3560e18197282b%3A0x2863388720514631!2sDachepalle%2C%20Andhra%20Pradesh%20522410!5e0!3m2!1sen!2sin!4v1697200832488!5m2!1sen!2sin"
                                 width="100%" 
                                 height="450" 
                                 style={{ border: 0 }} 
@@ -1191,7 +1195,7 @@ const ImpactPage = () => (
                         <div>
                             <h3 className="text-xl font-bold">Annual Report 2024</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Published: Jan 2025</p>
-                            <a href="#" className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300">Download PDF <i className="fas fa-download ml-1"></i></a>
+                            <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Download PDF <i className="fas fa-download ml-1"></i></a>
                         </div>
                     </div>
                      {/* Report Card */}
@@ -1200,7 +1204,7 @@ const ImpactPage = () => (
                         <div>
                             <h3 className="text-xl font-bold">Financial Statement 2024</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Published: Jan 2025</p>
-                            <a href="#" className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300">Download PDF <i className="fas fa-download ml-1"></i></a>
+                            <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Download PDF <i className="fas fa-download ml-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -1265,7 +1269,7 @@ const Lightbox = ({ src, onClose }) => {
     return (
         <div className="lightbox" onClick={onClose}>
             <img src={src} alt="Enlarged gallery view" onClick={e => e.stopPropagation()} />
-            <span className="lightbox-close" onClick={onClose}>&times;</span>
+            <span className="lightbox-close" onClick={onClose}>×</span>
         </div>
     );
 };
@@ -1306,21 +1310,21 @@ const Header = ({ currentPage, onNavigate, onThemeToggle, theme }) => {
         <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isSticky ? 'shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg' : ''}`}>
             <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <div className="flex items-center">
-                    <a href="#" onClick={(e) => { e.preventDefault(); handleNav('home'); }} className="text-2xl font-bold mr-10">
+                    <a href="#home" onClick={(e) => { e.preventDefault(); handleNav('home'); }} className="text-2xl font-bold mr-10 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>
                         Al-Noor <span className="text-yellow-400">Foundation</span>
                     </a>
                     <div className="hidden lg:flex items-center">
                         {navItems.map(item => (
-                            <a key={item} href="#" onClick={(e) => { e.preventDefault(); handleNav(item); }} className={`nav-link capitalize ${currentPage === item ? 'active' : ''}`}>{getNavItemName(item)}</a>
+                            <a href={`#${item}`} key={item} onClick={(e) => { e.preventDefault(); handleNav(item); }} className={`nav-link capitalize ${currentPage === item ? 'active' : ''}`}>{getNavItemName(item)}</a>
                         ))}
                          <div className="dropdown">
-                            <a href="#" className="nav-link flex items-center">
+                            <button className="nav-link flex items-center">
                                 More <i className="fas fa-chevron-down ml-2 text-xs"></i>
-                            </a>
+                            </button>
                             <div className="dropdown-menu">
-                                <a href="#" onClick={(e) => {e.preventDefault(); handleNav('impact')}} className="dropdown-item nav-link">Impact</a>
-                                <a href="#" onClick={(e) => {e.preventDefault(); handleNav('events')}} className="dropdown-item nav-link">Events</a>
-                                <a href="#" onClick={(e) => {e.preventDefault(); handleNav('faq')}} className="dropdown-item nav-link">FAQ</a>
+                                <a href="#impact" onClick={(e) => {e.preventDefault(); handleNav('impact')}} className="dropdown-item nav-link">Impact</a>
+                                <a href="#events" onClick={(e) => {e.preventDefault(); handleNav('events')}} className="dropdown-item nav-link">Events</a>
+                                <a href="#faq" onClick={(e) => {e.preventDefault(); handleNav('faq')}} className="dropdown-item nav-link">FAQ</a>
                             </div>
                         </div>
                     </div>
@@ -1337,11 +1341,11 @@ const Header = ({ currentPage, onNavigate, onThemeToggle, theme }) => {
             {/* Mobile Menu */}
             <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} lg:hidden bg-white dark:bg-gray-800 py-4 shadow-lg`}>
                  {navItems.map(item => (
-                    <a key={item} href="#" onClick={(e) => { e.preventDefault(); handleNav(item); }} className="block text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">{getNavItemName(item)}</a>
+                    <a href={`#${item}`} key={item} onClick={(e) => { e.preventDefault(); handleNav(item); }} className="block w-full text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 bg-transparent border-none" style={{textDecoration: 'none'}}>{getNavItemName(item)}</a>
                 ))}
-                <a href="#" onClick={(e) => { e.preventDefault(); handleNav('impact'); }} className="block text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">Impact</a>
-                <a href="#" onClick={(e) => { e.preventDefault(); handleNav('events'); }} className="block text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">Events</a>
-                <a href="#" onClick={(e) => { e.preventDefault(); handleNav('faq'); }} className="block text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400">FAQ</a>
+                <a href="#impact" onClick={(e) => { e.preventDefault(); handleNav('impact'); }} className="block w-full text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 bg-transparent border-none" style={{textDecoration: 'none'}}>Impact</a>
+                <a href="#events" onClick={(e) => { e.preventDefault(); handleNav('events'); }} className="block w-full text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 bg-transparent border-none" style={{textDecoration: 'none'}}>Events</a>
+                <a href="#faq" onClick={(e) => { e.preventDefault(); handleNav('faq'); }} className="block w-full text-center py-2 capitalize text-gray-700 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 bg-transparent border-none" style={{textDecoration: 'none'}}>FAQ</a>
             </div>
         </header>
     );
@@ -1355,15 +1359,15 @@ const TestimonialCarousel = () => {
     ];
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const slide = (direction) => {
+    const slide = useCallback((direction) => {
         const total = testimonials.length;
         setCurrentIndex((prevIndex) => (prevIndex + direction + total) % total);
-    };
+    }, [testimonials.length]);
 
     useEffect(() => {
         const autoSlide = setInterval(() => slide(1), 7000);
         return () => clearInterval(autoSlide);
-    }, []);
+    }, [slide]);
 
     return (
         <section className="py-24 bg-gray-50 dark:bg-gray-900/20">
@@ -1467,18 +1471,18 @@ const Footer = ({ onNavigate }) => {
                     <div>
                         <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" onClick={(e) => {e.preventDefault(); onNavigate('about')}} className="hover:text-yellow-400">About Us</a></li>
-                            <li><a href="#" onClick={(e) => {e.preventDefault(); onNavigate('programs')}} className="hover:text-yellow-400">Our Work</a></li>
-                            <li><a href="#" onClick={(e) => {e.preventDefault(); onNavigate('gallery')}} className="hover:text-yellow-400">Gallery</a></li>
-                            <li><a href="#" onClick={(e) => {e.preventDefault(); onNavigate('faq')}} className="hover:text-yellow-400">FAQ</a></li>
+                            <li><a href="#about" onClick={(e) => {e.preventDefault(); onNavigate('about')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left" style={{textDecoration: 'none'}}>About Us</a></li>
+                            <li><a href="#programs" onClick={(e) => {e.preventDefault(); onNavigate('programs')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left" style={{textDecoration: 'none'}}>Our Work</a></li>
+                            <li><a href="#gallery" onClick={(e) => {e.preventDefault(); onNavigate('gallery')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left" style={{textDecoration: 'none'}}>Gallery</a></li>
+                            <li><a href="#faq" onClick={(e) => {e.preventDefault(); onNavigate('faq')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left" style={{textDecoration: 'none'}}>FAQ</a></li>
                         </ul>
                     </div>
                      <div>
                         <h3 className="text-lg font-bold text-white mb-4">Get Involved</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" onClick={(e) => {e.preventDefault(); onNavigate('involved')}} className="hover:text-yellow-400">Volunteer</a></li>
-                            <li><a href="#" onClick={(e) => {e.preventDefault(); onNavigate('events')}} className="hover:text-yellow-400">Events</a></li>
-                            <li><a href="#" onClick={(e) => {e.preventDefault(); onNavigate('contact')}} className="hover:text-yellow-400">Contact</a></li>
+                            <li><a href="#involved" onClick={(e) => {e.preventDefault(); onNavigate('involved')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left" style={{textDecoration: 'none'}}>Volunteer</a></li>
+                            <li><a href="#events" onClick={(e) => {e.preventDefault(); onNavigate('events')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left" style={{textDecoration: 'none'}}>Events</a></li>
+                            <li><a href="#contact" onClick={(e) => {e.preventDefault(); onNavigate('contact')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left" style={{textDecoration: 'none'}}>Contact</a></li>
                         </ul>
                     </div>
                     <div>
@@ -1501,7 +1505,7 @@ const Footer = ({ onNavigate }) => {
                     </div>
                 </div>
                 <div className="mt-12 border-t border-gray-700 pt-6 text-center text-sm">
-                    <p>&copy; 2025 Al-Noor Foundation. All Rights Reserved.</p>
+                    <p>© 2025 Al-Noor Foundation. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>
@@ -1573,16 +1577,15 @@ export default function App() {
                 <main className="pt-20">
                     {renderPage()}
                 </main>
-                <button onClick={() => handleNavigate('home')} className="fixed bottom-5 left-5 btn btn-secondary shadow-lg z-30 w-14 h-14 !p-0">
+                <a href="#home" onClick={(e) => { e.preventDefault(); handleNavigate('home'); }} className="fixed bottom-5 left-5 btn btn-secondary shadow-lg z-30 w-14 h-14 !p-0">
                     <i className="fas fa-home text-xl"></i>
-                </button>
-                <button onClick={() => handleNavigate('donate')} className="fixed bottom-5 right-5 btn btn-primary shadow-lg flex items-center space-x-2 z-30">
+                </a>
+                <a href="#donate" onClick={(e) => { e.preventDefault(); handleNavigate('donate'); }} className="fixed bottom-5 right-5 btn btn-primary shadow-lg flex items-center space-x-2 z-30">
                     <i className="fas fa-heart"></i>
                     <span>Donate</span>
-                </button>
+                </a>
                 <Footer onNavigate={handleNavigate} />
             </div>
         </>
     );
 }
-
