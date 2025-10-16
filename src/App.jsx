@@ -674,7 +674,11 @@ const ProgramsPage = () => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Education Support</h3>
                             <p className="text-gray-700 dark:text-gray-300 mb-4">Providing scholarships, school supplies, and digital learning centers to underprivileged students.</p>
+<<<<<<< HEAD
                             <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Learn More <i className="fas fa-arrow-right ml-1"></i></a>
+=======
+                            <button onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0 cursor-pointer">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                         </div>
                     </div>
                 </FadeInSection>
@@ -684,7 +688,11 @@ const ProgramsPage = () => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Health Camps</h3>
                             <p className="text-gray-700 dark:text-gray-300 mb-4">Organizing free medical camps in remote areas, offering check-ups, medicines, and health awareness.</p>
+<<<<<<< HEAD
                              <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Learn More <i className="fas fa-arrow-right ml-1"></i></a>
+=======
+                             <button onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0 cursor-pointer">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                         </div>
                     </div>
                 </FadeInSection>
@@ -694,7 +702,11 @@ const ProgramsPage = () => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Food & Shelter Programs</h3>
                             <p className="text-gray-700 dark:text-gray-300 mb-4">Distributing nutritious meals and providing safe shelter for homeless individuals and families.</p>
+<<<<<<< HEAD
                              <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Learn More <i className="fas fa-arrow-right ml-1"></i></a>
+=======
+                             <button onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0 cursor-pointer">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                         </div>
                     </div>
                 </FadeInSection>
@@ -909,7 +921,11 @@ const EventsPage = () => (
                         <p className="text-sm text-yellow-500 font-semibold mb-1">UPCOMING: DEC 15, 2025</p>
                         <h3 className="text-2xl font-bold mb-2">Annual Charity Gala 2025</h3>
                         <p className="text-gray-700 dark:text-gray-300 mb-4">Join us for an evening of inspiration and fundraising to support our programs for the upcoming year.</p>
+<<<<<<< HEAD
                         <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Register Now <i className="fas fa-arrow-right ml-1"></i></a>
+=======
+                        <button onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0 cursor-pointer">Register Now <i className="fas fa-arrow-right ml-1"></i></button>
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                     </div>
                 </div>
             </FadeInSection>
@@ -920,7 +936,11 @@ const EventsPage = () => (
                         <p className="text-sm text-gray-500 font-semibold mb-1">NEWS: NOV 02, 2025</p>
                         <h3 className="text-2xl font-bold mb-2">Successful Health Camp in Rural Areas</h3>
                         <p className="text-gray-700 dark:text-gray-300 mb-4">Our recent health camp provided medical assistance to over 500 individuals, a major milestone for our healthcare initiative.</p>
+<<<<<<< HEAD
                          <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Read More <i className="fas fa-arrow-right ml-1"></i></a>
+=======
+                         <button onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0 cursor-pointer">Read More <i className="fas fa-arrow-right ml-1"></i></button>
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                     </div>
                 </div>
             </FadeInSection>
@@ -1118,7 +1138,11 @@ const ContactPage = () => {
                         <div className="overflow-hidden rounded-xl shadow-2xl">
                              <iframe 
                                 title="Google Maps Location of Madinapadu Village"
+<<<<<<< HEAD
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61346.5336302325!2d79.70732158443916!3d16.59695671510255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3560e18197282b%3A0x2863388720514631!2sDachepalle%2C%20Andhra%20Pradesh%20522410!5e0!3m2!1sen!2sin!4v1697200832488!5m2!1sen!2sin"
+=======
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3840.1234567890123!2d79.1234567!3d16.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDA3JzI0LjQiTiA3OcKwMDcnMjQuNCJF!5e0!3m2!1sen!2sin!4v1633382400000!5m2!1sen!2sin"
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                                 width="100%" 
                                 height="450" 
                                 style={{ border: 0 }} 
@@ -1195,7 +1219,11 @@ const ImpactPage = () => (
                         <div>
                             <h3 className="text-xl font-bold">Annual Report 2024</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Published: Jan 2025</p>
+<<<<<<< HEAD
                             <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Download PDF <i className="fas fa-download ml-1"></i></a>
+=======
+                            <button onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0 cursor-pointer">Download PDF <i className="fas fa-download ml-1"></i></button>
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                         </div>
                     </div>
                      {/* Report Card */}
@@ -1204,7 +1232,11 @@ const ImpactPage = () => (
                         <div>
                             <h3 className="text-xl font-bold">Financial Statement 2024</h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Published: Jan 2025</p>
+<<<<<<< HEAD
                             <a href="#" onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0" style={{textDecoration: 'none'}}>Download PDF <i className="fas fa-download ml-1"></i></a>
+=======
+                            <button onClick={(e) => e.preventDefault()} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0 cursor-pointer">Download PDF <i className="fas fa-download ml-1"></i></button>
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
                         </div>
                     </div>
                 </div>
@@ -1588,4 +1620,8 @@ export default function App() {
             </div>
         </>
     );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 99156170b6a6fd430815511180f59658426cbabb
