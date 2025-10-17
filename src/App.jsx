@@ -326,7 +326,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 100%;
+        background-size: 150% 150%;
     }
 
     .gallery-item-overlay {
@@ -531,7 +531,7 @@ const HomePage = ({ onNavigate }) => (
     <div className="page-container">
         {/* Hero Section */}
         <div className="relative min-h-screen flex items-center justify-center text-white text-center px-4 overflow-hidden">
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/MAIN.jpg')" }}></div>
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/backgroundImage.jpg')" }}></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <div className="relative z-10">
                 <h1 className="text-4xl md:text-7xl font-extrabold leading-tight mb-4 tracking-tighter">Serving Humanity, Spreading Light</h1>
@@ -620,7 +620,7 @@ const AboutPage = () => (
 
             <FadeInSection>
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-8 md:p-12 my-24 flex flex-col md:flex-row items-center gap-8">
-                    <img src="/manager.jpg" alt="Founder" className="w-40 h-40 rounded-full object-cover flex-shrink-0 shadow-lg border-4 border-yellow-400" />
+                    <img src="/founder.jpg" alt="Founder" className="w-40 h-40 rounded-full object-cover flex-shrink-0 shadow-lg border-4 border-yellow-400" />
                     <div>
                         <h3 className="text-2xl font-bold mb-2">A Message from Our Founder</h3>
                         <p className="italic text-lg mb-4 text-gray-600 dark:text-gray-300">"We started Al-Noor not just to provide aid, but to build bridges of hope and opportunity. Every donation, every hour volunteered, is a testament to the power of collective action. Thank you for being a part of this journey."</p>
@@ -1625,23 +1625,16 @@ export default function App() {
     useEffect(() => {
         // =================================================================================
         // --- Firebase Configuration ---
-        // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAVXWJtW776ZSG-GcKyJuK2XUZBfsidNTw",
-  authDomain: "al-noor-foundation-af2c4.firebaseapp.com",
-  projectId: "al-noor-foundation-af2c4",
-  storageBucket: "al-noor-foundation-af2c4.firebasestorage.app",
-  messagingSenderId: "184309071617",
-  appId: "1:184309071617:web:0ab034bfca5c03e8dea500"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+        // IMPORTANT: Paste your Firebase config object here.
+        // You can get this from your Firebase project settings.
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
         // =================================================================================
 
         try {
