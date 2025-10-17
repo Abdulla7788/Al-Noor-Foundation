@@ -1625,16 +1625,23 @@ export default function App() {
     useEffect(() => {
         // =================================================================================
         // --- Firebase Configuration ---
-        // IMPORTANT: Paste your Firebase config object here.
-        // You can get this from your Firebase project settings.
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+        // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAVXWJtW776ZSG-GcKyJuK2XUZBfsidNTw",
+  authDomain: "al-noor-foundation-af2c4.firebaseapp.com",
+  projectId: "al-noor-foundation-af2c4",
+  storageBucket: "al-noor-foundation-af2c4.firebasestorage.app",
+  messagingSenderId: "184309071617",
+  appId: "1:184309071617:web:0ab034bfca5c03e8dea500"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
         // =================================================================================
 
         try {
