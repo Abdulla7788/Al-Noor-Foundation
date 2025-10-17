@@ -2,6 +2,23 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 
+// =================================================================================
+// --- Firebase Configuration ---
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAVXWJtW776ZSG-GcKyJuK2XUZBfsidNTw",
+  authDomain: "al-noor-foundation-af2c4.firebaseapp.com",
+  projectId: "al-noor-foundation-af2c4",
+  storageBucket: "al-noor-foundation-af2c4.appspot.com",
+  messagingSenderId: "184309071617",
+  appId: "1:184309071617:web:0ab034bfca5c03e8dea500"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+// =================================================================================
+
 
 // STYLES - All CSS from the original file is placed here
 const GlobalStyles = () => (
@@ -1623,23 +1640,7 @@ export default function App() {
     useScript('https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js');
 
     useEffect(() => {
-        // =================================================================================
-        // --- Firebase Configuration ---
-        // IMPORTANT: Paste your Firebase config object here.
-        // You can get this from your Firebase project settings.
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        // =================================================================================
-
         try {
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
             setFirebaseAuth(auth);
 
             onAuthStateChanged(auth, (user) => {
@@ -1652,12 +1653,7 @@ export default function App() {
             });
         } catch(error) {
             console.error("Firebase initialization error:", error);
-            if(error.code === 'duplicate-app') {
-                 // This can happen in development with hot-reloading.
-                 // It's usually safe to ignore.
-            } else {
-                 alert("Could not initialize Firebase. Please check your config.");
-            }
+            alert("Could not initialize Firebase. Please check your config.");
             setLoading(false); // Stop loading even if firebase fails
         }
         
