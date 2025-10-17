@@ -641,12 +641,12 @@ const AboutPage = () => (
                         </div>
                          <div className="text-center group">
                             <img src="/secretary.jpg" alt="Team Member 2" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
-                            <h4 className="font-bold text-lg">Jane Smith</h4>
+                            <h4 className="font-bold text-lg">SHAIK FAYAZUDDIN</h4>
                             <p className="text-sm text-gray-500 dark:text-gray-400">SECRETARY</p>
                         </div>
                          <div className="text-center group">
                             <img src="/LADIE.jpg" alt="Team Member 3" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
-                            <h4 className="font-bold text-lg">MRRRR</h4>
+                            <h4 className="font-bold text-lg">SHAIK JAITHUNBI</h4>
                             <p className="text-sm text-gray-500 dark:text-gray-400">LEAD VOLUNTEER</p>
                         </div>
                          <div className="text-center group">
