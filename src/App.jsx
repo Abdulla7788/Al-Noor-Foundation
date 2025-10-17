@@ -326,7 +326,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 150%;
+        background-size: 150% 100%;
     }
 
     .gallery-item-overlay {
@@ -531,7 +531,7 @@ const HomePage = ({ onNavigate }) => (
     <div className="page-container">
         {/* Hero Section */}
         <div className="relative min-h-screen flex items-center justify-center text-white text-center px-4 overflow-hidden">
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/backgroundImage.jpg')" }}></div>
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/MAIN.jpg')" }}></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <div className="relative z-10">
                 <h1 className="text-4xl md:text-7xl font-extrabold leading-tight mb-4 tracking-tighter">Serving Humanity, Spreading Light</h1>
