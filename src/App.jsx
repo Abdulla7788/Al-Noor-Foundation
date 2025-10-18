@@ -519,15 +519,15 @@ const HomePage = ({ onNavigate }) => (
                      <FadeInSection>
                         <div className="p-4 impact-icon-container">
                             <i className="fas fa-child text-5xl text-yellow-400 mb-4"></i>
-                            <AnimatedCounter target={15000} />
-                            <p className="text-lg">Children Educated</p>
+                            <AnimatedCounter target={500} />
+                            <p className="text-lg">Children Educating</p>
                         </div>
                     </FadeInSection>
                      <FadeInSection delay={100}>
                         <div className="p-4 impact-icon-container">
                             <i className="fas fa-notes-medical text-5xl text-yellow-400 mb-4"></i>
-                            <AnimatedCounter target={25000} />
-                            <p className="text-lg">Patients Treated</p>
+                            <AnimatedCounter target={100} />
+                            <p className="text-lg">Womens Training </p>
                         </div>
                     </FadeInSection>
                     <FadeInSection delay={200}>
