@@ -1153,9 +1153,9 @@ const ContactPage = () => {
                     <FadeInSection delay={100}>
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
-                            <p className="mb-4 flex items-start"><i className="fas fa-map-marker-alt mr-3 mt-1 text-cyan-500 dark:text-cyan-400"></i><span>D.No: 1-45, Madinapadu Village,<br/>Dachepalli Mandal, Palnadu District,<br/>Andhra Pradesh, India</span></p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-phone mr-3 text-cyan-500 dark:text-cyan-400"></i> (123) 456-7890</p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-envelope mr-3 text-cyan-500 dark:text-cyan-400"></i> contact@alnoor.org</p>
+                            <p className="mb-4 flex items-start"><i className="fas fa-map-marker-alt mr-3 mt-1 text-cyan-500 dark:text-cyan-400"></i><span>D.No: 1-45, Madinapadu Village,<br/>Dachepalli Mandal, Palnadu District,<br/>Andhra Pradesh, India<br/>pin-522414 </span></p>
+                            <p className="mb-4 flex items-center"><i className="fas fa-phone mr-3 text-cyan-500 dark:text-cyan-400"></i> (+91)799766551</p>
+                            <p className="mb-4 flex items-center"><i className="fas fa-envelope mr-3 text-cyan-500 dark:text-cyan-400"></i>foundationalnoor@gmail.com</p>
                             <div className="mt-8">
                                 <h4 className="font-bold mb-4">Follow Us</h4>
                                 <div className="flex space-x-4">
