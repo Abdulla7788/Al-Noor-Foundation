@@ -258,7 +258,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 100%;
+        background-size: 150% 150%;
     }
 
     .gallery-item-overlay {
@@ -346,6 +346,63 @@ const GlobalStyles = () => (
     }
     .dropdown-item:hover {
         background-color: rgba(255,255,255,0.1);
+    }
+    
+    /* Auto-scrolling quotations */
+    .quotations-container {
+        overflow: hidden;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        position: relative;
+        width: 100%;
+    }
+    .quotations-container:hover .quotations-track {
+        animation-play-state: paused;
+    }
+    .quotations-container::before,
+    .quotations-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 15rem;
+        z-index: 2;
+    }
+    .quotations-container::before {
+        left: 0;
+        background: linear-gradient(to right, var(--color-card-background), transparent);
+    }
+    .quotations-container::after {
+        right: 0;
+        background: linear-gradient(to left, var(--color-card-background), transparent);
+    }
+
+    .quotations-track {
+        display: flex;
+        width: calc(400px * 12); /* Card width * number of cards (6 original + 6 duplicates) */
+        animation: scroll 80s linear infinite;
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-400px * 6)); /* Scroll by the width of the original 6 cards */
+        }
+    }
+
+    .quote-card {
+        width: 400px;
+        flex-shrink: 0;
+        padding: 2rem;
+        margin: 0 1rem;
+        background-color: var(--color-background);
+        border-radius: 0.75rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
   `}</style>
 );
@@ -548,8 +605,8 @@ const HomePage = ({ onNavigate }) => (
             </div>
         </section>
         
-        {/* Testimonials */}
-        <TestimonialCarousel />
+        {/* Quotations Section */}
+        <Quotations />
     </div>
 );
 
@@ -650,7 +707,7 @@ const ProgramsPage = ({ onNavigate }) => (
                 </FadeInSection>
                 <FadeInSection delay={300}>
                     <div className="bg-card-background shadow-lg overflow-hidden card-hover">
-                        <img src="https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Women Sewing Machine Training" className="w-full h-48 object-cover" />
+                        <img src="/clothes.jpg" alt="Women Sewing Machine Training" className="w-full h-48 object-cover" />
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Women Sewing Machine Training & Certification</h3>
                             <p className="text-text-muted mb-4">Empowering women through vocational training to gain valuable skills for self-employment and economic independence.</p>
@@ -717,7 +774,7 @@ const InvolvedPage = () => {
                         <i className="fas fa-check-circle"></i>
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Application Sent!</h2>
-                    <p className="text-gray-700 dark:text-gray-300">Thank you for your interest! We've opened WhatsApp for you to send the application details directly.</p>
+                    <p className="text-text-muted">Thank you for your interest! We've opened WhatsApp for you to send the application details directly.</p>
                 </div>
             );
         }
@@ -949,10 +1006,10 @@ const EventsPage = ({ onNavigate }) => (
             <p className="section-subtitle">Stay updated with our latest activities, stories of impact, and upcoming events.</p>
             <FadeInSection>
                 <div className="max-w-4xl mx-auto bg-card-background rounded-xl shadow-lg overflow-hidden md:flex mb-8 card-hover">
-                    <img src="/SWE.jpg" alt="Women Sewing Machine Training" className="md:w-1/3 object-cover" />
+                    <img src={eventsData.sewing_training.image} alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
                     <div className="p-6 md:p-8">
                         <p className="text-sm text-yellow-500 font-semibold mb-1">ONGOING</p>
-                        <h3 className="text-2xl font-bold mb-2">Women Sewing Machine Training & Certification</h3>
+                        <h3 className="text-2xl font-bold mb-2">{eventsData.sewing_training.title}</h3>
                         <p className="text-text-muted mb-2">Status: {eventsData.sewing_training.status}</p>
                         <p className="text-text-muted mb-4">{eventsData.sewing_training.shortDescription}</p>
                         <button onClick={() => onNavigate('event-details', { eventId: 'sewing_training' })} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
@@ -968,7 +1025,7 @@ const EventDetailsPage = ({ event, onNavigate }) => (
         <div className="container mx-auto px-6 max-w-4xl">
             <button onClick={() => onNavigate('events')} className="text-cyan-500 hover:underline mb-8">&larr; Back to Events</button>
             <FadeInSection>
-                 <img src="/SWE.jpg" alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
+                <img src={event.image} alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
                 <h1 className="section-title text-left">{event.title}</h1>
                 <div className="bg-card-background rounded-lg p-6 space-y-4">
                     <p><strong>Status:</strong> {event.status}</p>
@@ -977,7 +1034,7 @@ const EventDetailsPage = ({ event, onNavigate }) => (
                     <p><strong>Venue:</strong> {event.details.venue}</p>
                 </div>
                  <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
-                 <img src="/SWE.jpg" alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg" />
+                <img src={event.details.image} alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg" />
             </FadeInSection>
         </div>
     </div>
@@ -1153,16 +1210,16 @@ const ContactPage = () => {
                     <FadeInSection delay={100}>
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
-                            <p className="mb-4 flex items-start"><i className="fas fa-map-marker-alt mr-3 mt-1 text-cyan-500 dark:text-cyan-400"></i><span>D.No: 1-45, Madinapadu Village,<br/>Dachepalli Mandal, Palnadu District,<br/>Andhra Pradesh, India<br/>pin-522414 </span></p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-phone mr-3 text-cyan-500 dark:text-cyan-400"></i> (+91)799766551</p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-envelope mr-3 text-cyan-500 dark:text-cyan-400"></i>foundationalnoor@gmail.com</p>
+                            <p className="mb-4 flex items-start"><i className="fas fa-map-marker-alt mr-3 mt-1 text-cyan-500"></i><span>D.No: 1-45, Madinapadu Village,<br/>Dachepalli Mandal, Palnadu District,<br/>Andhra Pradesh, India<br/>pin-522414 </span></p>
+                            <p className="mb-4 flex items-center"><i className="fas fa-phone mr-3 text-cyan-500"></i> (+91)7997666551</p>
+                            <p className="mb-4 flex items-center"><i className="fas fa-envelope mr-3 text-cyan-500"></i>foundationalnoor@gmail.com</p>
                             <div className="mt-8">
                                 <h4 className="font-bold mb-4">Follow Us</h4>
                                 <div className="flex space-x-4">
-                                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-facebook"></i></a>
-                                    <a href="https://youtu.be/D-RrrARZ0_k?feature=shared" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-youtube"></i></a>
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fab fa-instagram"></i></a>
-                                    <a href="https://maps.app.goo.gl/NswGuLBPNjFRVum1A?g_st=ac" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"><i className="fas fa-map-marker-alt"></i></a>
+                                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fab fa-facebook"></i></a>
+                                    <a href="https://youtu.be/D-RrrARZ0_k?feature=shared" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fab fa-youtube"></i></a>
+                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fab fa-instagram"></i></a>
+                                    <a href="https://maps.app.goo.gl/NswGuLBPNjFRVum1A?g_st=ac" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fas fa-map-marker-alt"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -1349,7 +1406,7 @@ const Header = ({ currentPage, onNavigate }) => { // onThemeToggle, user, onLogo
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navItems = ['home', 'about', 'programs', 'gallery', 'involved', 'contact'];
+    const navItems = ['home', 'about', 'programs', 'gallery', 'events', 'involved', 'contact'];
     
     const handleNav = (page) => {
         onNavigate(page);
@@ -1362,6 +1419,7 @@ const Header = ({ currentPage, onNavigate }) => { // onThemeToggle, user, onLogo
             case 'about': return 'About Us';
             case 'programs': return 'Services';
             case 'gallery': return 'Gallery';
+            case 'events': return 'Events';
             case 'involved': return 'Join as Volunteer';
             case 'contact': return 'Contact Us';
             default: return item;
@@ -1379,7 +1437,6 @@ const Header = ({ currentPage, onNavigate }) => { // onThemeToggle, user, onLogo
                         {navItems.map(item => (
                             <button key={item} onClick={(e) => { e.preventDefault(); handleNav(item); }} className={`nav-link capitalize ${currentPage === item ? 'active' : ''}`}>{getNavItemName(item)}</button>
                         ))}
-                        <button onClick={(e) => { e.preventDefault(); handleNav('events'); }} className={`nav-link capitalize ${currentPage === 'events' ? 'active' : ''}`}>Events</button>
                     </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -1393,50 +1450,34 @@ const Header = ({ currentPage, onNavigate }) => { // onThemeToggle, user, onLogo
                  {navItems.map(item => (
                     <button key={item} onClick={(e) => { e.preventDefault(); handleNav(item); }} className="block w-full text-center py-2 capitalize text-gray-200 hover:text-cyan-400 bg-transparent border-none">{getNavItemName(item)}</button>
                 ))}
-                <button onClick={(e) => { e.preventDefault(); handleNav('events'); }} className="block w-full text-center py-2 capitalize text-gray-200 hover:text-cyan-400 bg-transparent border-none">Events</button>
             </div>
         </header>
     );
 };
 
-const TestimonialCarousel = () => {
-    const testimonials = [
-        { quote: "Al-Noor's scholarship changed my life. I am now the first in my family to attend university...", name: "Amina Yusuf", role: "Scholarship Recipient" },
-        { quote: "Volunteering at the health camp was a profound experience. Seeing the immediate impact...", name: "Dr. Ben Carter", role: "Volunteer Doctor" },
-        { quote: "We partner with Al-Noor because of their transparency and dedication. Every dollar is accounted for...", name: "Sarah Chen", role: "Corporate Donor" }
+const Quotations = () => {
+    const quotes = [
+        { quote: "The best way to find yourself is to lose yourself in the service of others.", author: "Mahatma Gandhi" },
+        { quote: "We make a living by what we get, but we make a life by what we give.", author: "Winston Churchill" },
+        { quote: "No one has ever become poor by giving.", author: "Anne Frank" },
+        { quote: "The purpose of life is not to be happy. It is to be useful, to be honorable, to be compassionate, to have it make some difference that you have lived and lived well.", author: "Ralph Waldo Emerson"},
+        { quote: "Only a life lived for others is a life worthwhile.", author: "Albert Einstein"},
+        { quote: "Service to others is the rent you pay for your room here on Earth.", author: "Muhammad Ali"}
     ];
-    const [currentIndex, setCurrentIndex] = useState(0);
 
-    const slide = useCallback((direction) => {
-        const total = testimonials.length;
-        setCurrentIndex((prevIndex) => (prevIndex + direction + total) % total);
-    }, [testimonials.length]);
-
-    useEffect(() => {
-        const autoSlide = setInterval(() => slide(1), 7000);
-        return () => clearInterval(autoSlide);
-    }, [slide]);
+    const duplicatedQuotes = [...quotes, ...quotes];
 
     return (
-        <section className="py-24 bg-background">
-            <div className="container mx-auto px-6">
-                <h2 className="section-title">Voices of Change</h2>
-                <p className="section-subtitle">Hear from those whose lives have been touched by your generosity.</p>
-                <FadeInSection>
-                    <div className="relative overflow-hidden max-w-4xl mx-auto bg-card-background rounded-xl shadow-xl p-8">
-                        <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                            {testimonials.map((t, index) => (
-                                <div key={index} className="flex-shrink-0 w-full px-8 text-center">
-                                    <p className="text-xl italic mb-4">"{t.quote}"</p>
-                                    <p className="font-bold text-lg">{t.name}</p>
-                                    <p className="text-sm text-text-muted">{t.role}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <button onClick={() => slide(-1)} className="absolute top-1/2 left-2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-black text-2xl transition-all"><i className="fas fa-chevron-left"></i></button>
-                        <button onClick={() => slide(1)} className="absolute top-1/2 right-2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-black text-2xl transition-all"><i className="fas fa-chevron-right"></i></button>
-                    </div>
-                </FadeInSection>
+        <section className="py-24 bg-card-background quotations-container">
+            <h2 className="section-title">Inspirational Quotations</h2>
+            <p className="section-subtitle">Words that inspire us to serve humanity.</p>
+            <div className="quotations-track">
+                {duplicatedQuotes.map((q, index) => (
+                     <div key={index} className="quote-card">
+                         <p className="text-xl italic mb-4 text-text-muted">"{q.quote}"</p>
+                         <p className="font-semibold text-secondary">- {q.author}</p>
+                     </div>
+                ))}
             </div>
         </section>
     );
