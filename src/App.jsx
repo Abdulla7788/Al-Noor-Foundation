@@ -315,39 +315,6 @@ const GlobalStyles = () => (
       100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
     }
 
-    .dropdown {
-        position: relative;
-    }
-    .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        margin-top: 1rem;
-        background-color: #1e1e1e;
-        border-radius: 0.5rem;
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        z-index: 50;
-        min-width: 160px;
-        opacity: 0;
-        transform: translateY(-10px);
-        visibility: hidden;
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-    }
-    .dropdown:hover .dropdown-menu {
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
-    }
-    .dropdown-item {
-        display: block;
-        padding: 0.75rem 1rem;
-        white-space: nowrap;
-        color: var(--color-text);
-    }
-    .dropdown-item:hover {
-        background-color: rgba(255,255,255,0.1);
-    }
-    
     /* Auto-scrolling quotations */
     .quotations-container {
         overflow: hidden;
@@ -523,12 +490,13 @@ const eventsData = {
         title: 'Women Sewing Machine Training & Certification',
         image: '/clothes.jpg',
         shortDescription: 'Join our vocational training program to empower women with skills for self-employment. Certification provided.',
-        status: 'Started: Oct 1, 2025 - Closing Soon: Nov 30, 2025',
+        status: '5-Month Course (July - November)',
         details: {
-            members: 'Currently training 25 women from the local community.',
-            timings: 'Monday to Friday, 10:00 AM - 1:00 PM',
-            venue: 'Al-Noor Foundation Community Hall, Madinapadu Village.',
-            image: '/education.jpg' 
+            members: 'Currently training 150 women from the local community.',
+            timings: 'Batch 1: 10:00 AM - 1:00 PM | Batch 2: 1:00 PM - 5:00 PM',
+            venue: 'Near Noor Masjid, Madinapadu Road, Dachepalli',
+            image: '/education.jpg',
+            certificate: '/certificate.jpg'
         }
     }
 }
@@ -539,7 +507,7 @@ const HomePage = ({ onNavigate }) => (
     <div className="page-container">
         {/* Hero Section */}
         <div className="relative min-h-screen flex items-center justify-center text-white text-center px-4 overflow-hidden">
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/MAIN.jpg')" }}></div>
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/backgroundImage.jpg')" }}></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <div className="relative z-10">
                 <h1 className="text-4xl md:text-7xl font-extrabold leading-tight mb-4 tracking-tighter">Serving Humanity, Spreading Light</h1>
@@ -622,7 +590,7 @@ const AboutPage = () => (
                         <h2 className="text-3xl font-bold mb-4">Our Story</h2>
                         <p className="mb-4">Founded in 2025, Al-Noor Foundation began with a simple yet powerful idea: that even a small act of kindness can ignite a beacon of hope. From a local food drive, we have grown into a multi-faceted organization serving thousands across the nation, driven by compassion and a commitment to sustainable change.</p>
                     </div>
-                    <img src="/backgroundImage.jpg" alt="Our Journey" className="rounded-xl shadow-2xl" />
+                    <img src="/backgroundImage2.jpg" alt="Our Journey" className="rounded-xl shadow-2xl" />
                 </div>
             </FadeInSection>
 
@@ -1006,7 +974,7 @@ const EventsPage = ({ onNavigate }) => (
             <p className="section-subtitle">Stay updated with our latest activities, stories of impact, and upcoming events.</p>
             <FadeInSection>
                 <div className="max-w-4xl mx-auto bg-card-background rounded-xl shadow-lg overflow-hidden md:flex mb-8 card-hover">
-                    <img src={eventsData.sewing_training.image} alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
+                    <img src="/sweeing 1.jpg" alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
                     <div className="p-6 md:p-8">
                         <p className="text-sm text-yellow-500 font-semibold mb-1">ONGOING</p>
                         <h3 className="text-2xl font-bold mb-2">{eventsData.sewing_training.title}</h3>
@@ -1025,7 +993,7 @@ const EventDetailsPage = ({ event, onNavigate }) => (
         <div className="container mx-auto px-6 max-w-4xl">
             <button onClick={() => onNavigate('events')} className="text-cyan-500 hover:underline mb-8">&larr; Back to Events</button>
             <FadeInSection>
-                <img src={event.image} alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
+                <img src="/sweing2.jpg" alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
                 <h1 className="section-title text-left">{event.title}</h1>
                 <div className="bg-card-background rounded-lg p-6 space-y-4">
                     <p><strong>Status:</strong> {event.status}</p>
@@ -1034,7 +1002,9 @@ const EventDetailsPage = ({ event, onNavigate }) => (
                     <p><strong>Venue:</strong> {event.details.venue}</p>
                 </div>
                  <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
-                <img src={event.details.image} alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg" />
+                <img src="/SWEEING.jpg" alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
+                <h2 className="text-2xl font-bold mt-12 mb-4">Certification of Completion</h2>
+                <img src="/certificate.png" alt="Training Certificate" className="w-90% h-auto object-cover rounded-xl shadow-lg" />
             </FadeInSection>
         </div>
     </div>
