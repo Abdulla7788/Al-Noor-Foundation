@@ -725,7 +725,7 @@ const InvolvedPage = () => {
 
         const messageText = `New Volunteer Application:\n\n*Name:*\n${formData.name}\n\n*Email:*\n${formData.email}\n\n*Phone:*\n${formData.phone}\n\n*Area of Interest:*\n${formData.interest}\n\n*Why do you want to volunteer:*\n${formData.message}`;
         const encodedMessage = encodeURIComponent(messageText);
-        const phoneNumber = "+91 7997666551"; // Country code + phone number
+        const phoneNumber = "7997666551"; // Country code + phone number
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
         
