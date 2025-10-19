@@ -725,7 +725,7 @@ const InvolvedPage = () => {
 
         const messageText = `New Volunteer Application:\n\n*Name:*\n${formData.name}\n\n*Email:*\n${formData.email}\n\n*Phone:*\n${formData.phone}\n\n*Area of Interest:*\n${formData.interest}\n\n*Why do you want to volunteer:*\n${formData.message}`;
         const encodedMessage = encodeURIComponent(messageText);
-        const phoneNumber = "919391303713"; // Country code + phone number
+        const phoneNumber = "+91 7997666551"; // Country code + phone number
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
         
@@ -763,8 +763,8 @@ const InvolvedPage = () => {
                             <option value="">Area of Interest</option>
                             <option value="education">Education</option>
                             <option value="healthcare">Healthcare</option>
-                            <option value="relief">Disaster Relief</option>
-                            <option value="women_empowerment">Women Empowerment</option>
+                            <option value="relief">festive groceries help</option>
+                            <option value="women_empowerment">Women employment</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
