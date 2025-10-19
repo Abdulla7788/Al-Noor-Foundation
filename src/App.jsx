@@ -258,7 +258,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 150%;
+        background-size: 150% 100%;
     }
 
     .gallery-item-overlay {
