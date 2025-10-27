@@ -258,7 +258,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 100%;
+        background-size: 150% 150%;
     }
 
     .gallery-item-overlay {
@@ -488,15 +488,15 @@ const servicesData = {
 const eventsData = {
     'sewing_training': {
         title: 'Women Sewing Machine Training & Certification',
-        image: '/clothes.jpg',
-        shortDescription: 'Join our vocational training program to empower women with skills for self-employment. Certification provided.',
-        status: '5-Month Course (July - November)',
+        image: '/sewing_training.jpg', // Main image for event card
+        shortDescription: 'Free 5-month training course with free machine distribution and certification.',
+        status: 'Started: July 2025 - Closing Soon: November 2025',
         details: {
-            members: 'Currently training 150 women from the local community.',
+            members: 'Total 150 members are learning.',
             timings: 'Batch 1: 10:00 AM - 1:00 PM | Batch 2: 1:00 PM - 5:00 PM',
             venue: 'Near Noor Masjid, Madinapadu Road, Dachepalli',
-            image: '/education.jpg',
-            certificate: '/certificate.jpg'
+            image: '/sewing_training_glimpse.jpg', // Glimpse image
+            certificate: '/certificate.jpg' // Certificate image
         }
     }
 }
@@ -590,7 +590,7 @@ const AboutPage = () => (
                         <h2 className="text-3xl font-bold mb-4">Our Story</h2>
                         <p className="mb-4">Founded in 2025, Al-Noor Foundation began with a simple yet powerful idea: that even a small act of kindness can ignite a beacon of hope. From a local food drive, we have grown into a multi-faceted organization serving thousands across the nation, driven by compassion and a commitment to sustainable change.</p>
                     </div>
-                    <img src="/backgroundImage2.jpg" alt="Our Journey" className="rounded-xl shadow-2xl" />
+                    <img src="/backgroundImage.jpg" alt="Our Journey" className="rounded-xl shadow-2xl" />
                 </div>
             </FadeInSection>
 
@@ -725,7 +725,7 @@ const InvolvedPage = () => {
 
         const messageText = `New Volunteer Application:\n\n*Name:*\n${formData.name}\n\n*Email:*\n${formData.email}\n\n*Phone:*\n${formData.phone}\n\n*Area of Interest:*\n${formData.interest}\n\n*Why do you want to volunteer:*\n${formData.message}`;
         const encodedMessage = encodeURIComponent(messageText);
-        const phoneNumber = "7997666551"; // Country code + phone number
+        const phoneNumber = "919391303713"; // Country code + phone number
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
         
@@ -974,7 +974,7 @@ const EventsPage = ({ onNavigate }) => (
             <p className="section-subtitle">Stay updated with our latest activities, stories of impact, and upcoming events.</p>
             <FadeInSection>
                 <div className="max-w-4xl mx-auto bg-card-background rounded-xl shadow-lg overflow-hidden md:flex mb-8 card-hover">
-                    <img src="/sweeing 1.jpg" alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
+                    <img src={eventsData.sewing_training.image} alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
                     <div className="p-6 md:p-8">
                         <p className="text-sm text-yellow-500 font-semibold mb-1">ONGOING</p>
                         <h3 className="text-2xl font-bold mb-2">{eventsData.sewing_training.title}</h3>
@@ -993,7 +993,7 @@ const EventDetailsPage = ({ event, onNavigate }) => (
         <div className="container mx-auto px-6 max-w-4xl">
             <button onClick={() => onNavigate('events')} className="text-cyan-500 hover:underline mb-8">&larr; Back to Events</button>
             <FadeInSection>
-                <img src="/sweing2.jpg" alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
+                <img src={event.image} alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
                 <h1 className="section-title text-left">{event.title}</h1>
                 <div className="bg-card-background rounded-lg p-6 space-y-4">
                     <p><strong>Status:</strong> {event.status}</p>
@@ -1002,9 +1002,9 @@ const EventDetailsPage = ({ event, onNavigate }) => (
                     <p><strong>Venue:</strong> {event.details.venue}</p>
                 </div>
                  <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
-                <img src="/SWEEING.jpg" alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
+                <img src={event.details.image} alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
                 <h2 className="text-2xl font-bold mt-12 mb-4">Certification of Completion</h2>
-                <img src="/certificate.png" alt="Training Certificate" className="w-90% h-auto object-cover rounded-xl shadow-lg" />
+                <img src={event.details.certificate} alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
             </FadeInSection>
         </div>
     </div>
@@ -1202,7 +1202,7 @@ const ContactPage = () => {
                         <div className="overflow-hidden rounded-xl shadow-2xl">
                              <iframe 
                                 title="Google Maps Location of Madinapadu Village"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15334.26422055622!2d79.73461865!3d16.5925433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3562c11e742e97%3A0x334b51a4413346d!2sMadinapadu%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1665412345678!5m2!1sen!2sin"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15334.26422055622!2d79.73461865!3d16.5925433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3562c11e742e97%3A0x334b51a4413346d!2sMadinapadu%2C%2BAndhra%2BPradesh!5e0!3m2!1sen!2sin!4v1665412345678!5m2!1sen!2sin"
                                 width="100%" 
                                 height="450" 
                                 style={{ border: 0 }} 
@@ -1601,6 +1601,56 @@ const TermsPage = () => (
     </div>
 );
 
+// --- KOTHA PAGES (NEW PAGES for Razorpay) ---
+
+const PrivacyPolicyPage = () => (
+    <div className="page-container py-24">
+        <div className="container mx-auto px-6 max-w-4xl">
+            <h1 className="section-title">Privacy Policy</h1>
+            <div className="prose dark:prose-invert lg:prose-xl mx-auto space-y-4 text-text-muted">
+                <p>Your privacy is important to us. It is Al-Noor Foundation's policy to respect your privacy regarding any information we may collect from you across our website.</p>
+                
+                <h2>1. Information we collect</h2>
+                <p>We only ask for personal information when we truly need it to provide a service to you (for example, when processing a donation or registering you as a volunteer). We collect it by fair and lawful means, with your knowledge and consent.</p>
+                
+                <h2>2. How we use your information</h2>
+                <p>We use the information we collect to operate and maintain our website, process your donations, send you receipts and thank-you notes, and communicate with you about our work. We will not share your personal information with any third-party, except as required by law.</p>
+
+                <h2>3. Security</h2>
+                <p>We take the security of your data seriously and use commercially acceptable means to protect it. However, remember that no method of transmission over the internet or electronic storage is 100% secure.</p>
+
+                <h2>4. Links to other sites</h2>
+                <p>Our website may link to external sites that are not operated by us. Please be aware that we have no control over the content and practices of these sites, and cannot accept responsibility or liability for their respective privacy policies.</p>
+            </div>
+        </div>
+    </div>
+);
+
+const RefundPolicyPage = () => (
+    <div className="page-container py-24">
+        <div className="container mx-auto px-6 max-w-4xl">
+            <h1 className="section-title">Cancellation & Refund Policy</h1>
+            <div className="prose dark:prose-invert lg:prose-xl mx-auto space-y-4 text-text-muted">
+                <p>Al-Noor Foundation is a non-profit organization. We are grateful for every donation received in support of our charitable causes.</p>
+                <p>As a charitable foundation, all donations made to Al-Noor Foundation are **final and non-refundable**. We do not offer any refunds or cancellations for donations once they are processed successfully.</p>
+                <p>If you have made an error in your donation amount or believe a fraudulent transaction has occurred, please contact us immediately at **foundationalnoor@gmail.com** so we can address the issue.</p>
+            </div>
+        </div>
+    </div>
+);
+
+const ShippingPolicyPage = () => (
+    <div className="page-container py-24">
+        <div className="container mx-auto px-6 max-w-4xl">
+            <h1 className="section-title">Shipping & Delivery Policy</h1>
+            <div className="prose dark:prose-invert lg:prose-xl mx-auto space-y-4 text-text-muted">
+                <p>Al-Noor Foundation does not sell or ship any physical goods or products. Our website's primary purpose is to facilitate our charitable activities and to accept monetary donations to support these causes.</p>
+                <p>Therefore, **no shipping or delivery policy is applicable** as we do not deliver any products. All services rendered are of a charitable nature.</p>
+            </div>
+        </div>
+    </div>
+);
+
 // --- MAIN APP COMPONENT ---
 export default function App() {
     const [loading, setLoading] = useState(true);
@@ -1639,6 +1689,9 @@ export default function App() {
             case 'impact': return <ImpactPage />;
             case 'faq': return <FAQPage />;
             case 'terms': return <TermsPage />;
+            case 'privacy': return <PrivacyPolicyPage />;
+            case 'refund': return <RefundPolicyPage />;
+            case 'shipping': return <ShippingPolicyPage />;
             case 'service-details':
                 const service = servicesData[pageData.serviceId];
                 return service ? <ServiceDetailsPage service={service} onNavigate={handleNavigate} /> : <HomePage onNavigate={handleNavigate} />;
