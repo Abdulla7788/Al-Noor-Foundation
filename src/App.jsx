@@ -850,10 +850,10 @@ const DonatePage = () => {
         // --- Razorpay Configuration ---
         // IMPORTANT: Replace this with your actual Key ID from your Razorpay account.
         // See the razorpay_setup_guide.md file for instructions.
-        const razorpayKeyId = 'YOUR_RAZORPAY_KEY_ID';
+        const razorpayKeyId = 'rzp_test_RYYROwtmO1vopa';
         // =================================================================================
         
-        if (razorpayKeyId === 'YOUR_RAZORPAY_KEY_ID') {
+        if (razorpayKeyId === 'rzp_test_RYYROwtmO1vopa') {
             alert('Razorpay Key ID is not set. Please follow the setup guide in razorpay_setup_guide.md.');
             return;
         }
