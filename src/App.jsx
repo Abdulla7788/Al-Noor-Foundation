@@ -630,6 +630,11 @@ const AboutPage = () => (
                             <h4 className="font-bold text-lg">SHAIK JANI</h4>
                             <p className="text-sm text-text-muted">FINANCE & ACCOUNTANT</p>
                         </div>
+                         <div className="text-center group">
+                            <img src="/ABDULLA.jpg" alt="Team Member 4" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
+                            <h4 className="font-bold text-lg">ABDULLA SHAIK</h4>
+                            <p className="text-sm text-text-muted">TRUST MEMBER</p>
+                        </div>
                     </div>
                 </div>
             </FadeInSection>
@@ -974,7 +979,7 @@ const EventsPage = ({ onNavigate }) => (
             <p className="section-subtitle">Stay updated with our latest activities, stories of impact, and upcoming events.</p>
             <FadeInSection>
                 <div className="max-w-4xl mx-auto bg-card-background rounded-xl shadow-lg overflow-hidden md:flex mb-8 card-hover">
-                    <img src="/SWEEING.jpg" alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
+                    <img src="/sweeing 1.jpg" alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
                     <div className="p-6 md:p-8">
                         <p className="text-sm text-yellow-500 font-semibold mb-1">ONGOING</p>
                         <h3 className="text-2xl font-bold mb-2">{eventsData.sewing_training.title}</h3>
@@ -993,7 +998,7 @@ const EventDetailsPage = ({ event, onNavigate }) => (
         <div className="container mx-auto px-6 max-w-4xl">
             <button onClick={() => onNavigate('events')} className="text-cyan-500 hover:underline mb-8">&larr; Back to Events</button>
             <FadeInSection>
-                <img src={event.image} alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
+                <img src="/SWEEING.jpg" alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
                 <h1 className="section-title text-left">{event.title}</h1>
                 <div className="bg-card-background rounded-lg p-6 space-y-4">
                     <p><strong>Status:</strong> {event.status}</p>
@@ -1002,9 +1007,9 @@ const EventDetailsPage = ({ event, onNavigate }) => (
                     <p><strong>Venue:</strong> {event.details.venue}</p>
                 </div>
                  <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
-                <img src={event.details.image} alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
+                <img src="/sweing2.jpg"alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
                 <h2 className="text-2xl font-bold mt-12 mb-4">Certification of Completion</h2>
-                <img src={event.details.certificate} alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
+                <img src="/certificate.png"alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
             </FadeInSection>
         </div>
     </div>
