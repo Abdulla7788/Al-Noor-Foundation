@@ -258,7 +258,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 100%;
+        background-size: 150% 150%;
     }
 
     .gallery-item-overlay {
@@ -490,7 +490,7 @@ const eventsData = {
         title: 'Women Sewing Machine Training & Certification',
         image: '/sewing_training.jpg', // Main image for event card
         shortDescription: 'Free 5-month training course with free machine distribution and certification.',
-        status: 'Started: July 2025 - Closing Soon: November 2025',
+        status: 'Duration: August 2025 - November 2025',
         details: {
             members: 'Total 150 members are learning.',
             timings: 'Batch 1: 10:00 AM - 1:00 PM | Batch 2: 1:00 PM - 5:00 PM',
@@ -632,8 +632,8 @@ const AboutPage = () => (
                         </div>
                          <div className="text-center group">
                             <img src="/ABDULLA.jpg" alt="Team Member 4" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
-                            <h4 className="font-bold text-lg">ABDULLA SHAIK</h4>
-                            <p className="text-sm text-text-muted">TRUST MEMBER</p>
+                            <h4 className="font-bold text-lg">ABDULLA</h4>
+                            <p className="text-sm text-text-muted">FOUNDATION MEMBER</p>
                         </div>
                     </div>
                 </div>
@@ -730,7 +730,7 @@ const InvolvedPage = () => {
 
         const messageText = `New Volunteer Application:\n\n*Name:*\n${formData.name}\n\n*Email:*\n${formData.email}\n\n*Phone:*\n${formData.phone}\n\n*Area of Interest:*\n${formData.interest}\n\n*Why do you want to volunteer:*\n${formData.message}`;
         const encodedMessage = encodeURIComponent(messageText);
-        const phoneNumber = "919391303713"; // Country code + phone number
+        const phoneNumber = "917997666551"; // <-- UPDATED PHONE NUMBER
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
         
@@ -855,10 +855,10 @@ const DonatePage = () => {
         // --- Razorpay Configuration ---
         // IMPORTANT: Replace this with your actual Key ID from your Razorpay account.
         // See the razorpay_setup_guide.md file for instructions.
-        const razorpayKeyId = 'rzp_test_RYYROwtmO1vopa';
+        const razorpayKeyId = 'YOUR_RAZORPAY_KEY_ID';
         // =================================================================================
         
-        if (razorpayKeyId === 'rzp_test_RYYROwtmO1vopa') {
+        if (razorpayKeyId === 'YOUR_RAZORPAY_KEY_ID') {
             alert('Razorpay Key ID is not set. Please follow the setup guide in razorpay_setup_guide.md.');
             return;
         }
@@ -979,7 +979,7 @@ const EventsPage = ({ onNavigate }) => (
             <p className="section-subtitle">Stay updated with our latest activities, stories of impact, and upcoming events.</p>
             <FadeInSection>
                 <div className="max-w-4xl mx-auto bg-card-background rounded-xl shadow-lg overflow-hidden md:flex mb-8 card-hover">
-                    <img src="/sweeing 1.jpg" alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
+                    <img src={eventsData.sewing_training.image} alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
                     <div className="p-6 md:p-8">
                         <p className="text-sm text-yellow-500 font-semibold mb-1">ONGOING</p>
                         <h3 className="text-2xl font-bold mb-2">{eventsData.sewing_training.title}</h3>
@@ -998,7 +998,7 @@ const EventDetailsPage = ({ event, onNavigate }) => (
         <div className="container mx-auto px-6 max-w-4xl">
             <button onClick={() => onNavigate('events')} className="text-cyan-500 hover:underline mb-8">&larr; Back to Events</button>
             <FadeInSection>
-                <img src="/SWEEING.jpg" alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
+                <img src={event.image} alt={event.title} className="w-full h-96 object-cover rounded-xl shadow-2xl mb-8" />
                 <h1 className="section-title text-left">{event.title}</h1>
                 <div className="bg-card-background rounded-lg p-6 space-y-4">
                     <p><strong>Status:</strong> {event.status}</p>
@@ -1007,9 +1007,9 @@ const EventDetailsPage = ({ event, onNavigate }) => (
                     <p><strong>Venue:</strong> {event.details.venue}</p>
                 </div>
                  <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
-                <img src="/sweing2.jpg"alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
+                <img src={event.details.image} alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
                 <h2 className="text-2xl font-bold mt-12 mb-4">Certification of Completion</h2>
-                <img src="/certificate.png"alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
+                <img src={event.details.certificate} alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
             </FadeInSection>
         </div>
     </div>
@@ -1046,27 +1046,22 @@ const ContactPage = () => {
         window.open(whatsappUrl, '_blank');
 
         // --- Step 2: Attempt to send email in the background ---
-
         // =================================================================================
         // --- EmailJS Configuration ---
-        // IMPORTANT: Replace these with your actual IDs from your EmailJS account.
         // See the email_setup_guide.md file for instructions.
         const serviceID = 'YOUR_SERVICE_ID';
-        const templateID = 'YOUR_TEMPLATE_ID';
-        const userID = 'YOUR_PUBLIC_KEY'; // This is also called Public Key in new accounts
+        const templateID = 'template_0tdjtjh'; // For notification TO YOU
+        const autoReplyTemplateID = 'template_ispse8i'; // For auto-reply TO USER
+        const userID = 'YOUR_PUBLIC_KEY'; // This is also called Public Key
         // =================================================================================
 
-        // Check if the placeholder values have been changed.
-        if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'YOUR_TEMPLATE_ID' || userID === 'YOUR_PUBLIC_KEY') {
-            console.error('EmailJS Error: Please replace the placeholder Service ID, Template ID, and Public Key in the code with your actual keys from your EmailJS account.');
-            // We opened WhatsApp, so we can consider this a partial success for the user.
-            // We will just reset the form and show a success message that implies the main action worked.
-            setStatus('success'); 
+        if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'template_0tdjtjh' || userID === 'YOUR_PUBLIC_KEY' || autoReplyTemplateID === 'YOUR_AUTOREPLY_TEMPLATE_ID') {
+            console.error('EmailJS Error: Please configure your EmailJS keys and template IDs in the code.');
+            setStatus('success'); // Still a success because WhatsApp opened.
             setFormData({ name: '', email: '', message: '' });
             return; 
         }
 
-        // Check if emailjs script is loaded
         if (!window.emailjs) {
             console.error('EmailJS script has not loaded yet.');
             setStatus('success'); // Still a success because WhatsApp opened.
@@ -1074,21 +1069,39 @@ const ContactPage = () => {
             return;
         }
 
-        const templateParams = {
+        // --- Send Notification Email (To You) ---
+        const notificationParams = {
             from_name: formData.name,
             from_email: formData.email,
             message: formData.message,
-            to_email: 'shaikabdulla1199@gmail.com'
+            to_email: 'foundationalnoor@gmail.com' // <-- UPDATED EMAIL
         };
-
-        window.emailjs.send(serviceID, templateID, templateParams, userID)
+        
+        window.emailjs.send(serviceID, templateID, notificationParams, userID)
             .then((response) => {
-                console.log('Email successfully sent!', response.status, response.text);
+                console.log('Notification email successfully sent!', response.status, response.text);
+                
+                // --- Send Auto-Reply Email (To User) ---
+                const autoReplyParams = {
+                    from_name: "Al-Noor Foundation",
+                    to_name: formData.name,
+                    to_email: formData.email,
+                    message: "Thank you for contacting us. We have received your message and will get back to you soon."
+                };
+
+                window.emailjs.send(serviceID, autoReplyTemplateID, autoReplyParams, userID)
+                    .then((response) => {
+                        console.log('Auto-reply email successfully sent!', response.status, response.text);
+                    }, (err) => {
+                        console.error('Failed to send auto-reply email. Error: ', err);
+                    });
+
                 setStatus('success');
                 setFormData({ name: '', email: '', message: '' });
+
             }, (err) => {
-                console.error('Failed to send email. Error: ', err);
-                setStatus('error'); // Show error only if email fails
+                console.error('Failed to send notification email. Error: ', err);
+                setStatus('error'); // Show error only if main email fails
             });
     };
     
@@ -1100,7 +1113,7 @@ const ContactPage = () => {
                         <i className="fas fa-check-circle"></i>
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
-                    <p className="text-text-muted">Thank you for reaching out. We have opened WhatsApp for you to send the message directly.</p>
+                    <p className="text-text-muted">Thank you for reaching out. We will get back to you soon. We have also opened WhatsApp for you to send the message directly.</p>
                 </div>
             );
         }
@@ -1112,7 +1125,7 @@ const ContactPage = () => {
                         <i className="fas fa-exclamation-circle"></i>
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Email Failed</h2>
-                    <p className="text-text-muted">Your message was sent to WhatsApp, but the email could not be delivered. Please check your EmailJS keys.</p>
+                    <p className="text-text-muted">Your message was sent to WhatsApp, but the email notification could not be delivered. Please check your EmailJS keys.</p>
                 </div>
             );
         }
@@ -1492,7 +1505,7 @@ const Footer = ({ onNavigate }) => {
 
         const templateParams = {
             subscriber_email: email,
-            to_email: 'shaikabdulla1199@gmail.com'
+            to_email: 'foundationalnoor@gmail.com'
         };
 
         window.emailjs.send(serviceID, templateID, templateParams, userID)
@@ -1548,6 +1561,9 @@ const Footer = ({ onNavigate }) => {
                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('events')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Events</button></li>
                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('contact')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Contact</button></li>
                              <li><button onClick={(e) => {e.preventDefault(); onNavigate('terms')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Terms & Conditions</button></li>
+                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('privacy')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Privacy Policy</button></li>
+                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('refund')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Refund Policy</button></li>
+                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('shipping')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Shipping Policy</button></li>
                         </ul>
                     </div>
                     <div>
