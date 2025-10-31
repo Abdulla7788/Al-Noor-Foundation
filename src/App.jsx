@@ -630,11 +630,7 @@ const AboutPage = () => (
                             <h4 className="font-bold text-lg">SHAIK JANI</h4>
                             <p className="text-sm text-text-muted">FINANCE & ACCOUNTANT</p>
                         </div>
-                         <div className="text-center group">
-                            <img src="/ABDULLA.jpg" alt="Team Member 4" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
-                            <h4 className="font-bold text-lg">ABDULLA</h4>
-                            <p className="text-sm text-text-muted">FOUNDATION MEMBER</p>
-                        </div>
+                        
                     </div>
                 </div>
             </FadeInSection>
