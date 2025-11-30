@@ -258,7 +258,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 100%;
+        background-size: 150% 10 0%;
     }
 
     .gallery-item-overlay {
@@ -521,7 +521,7 @@ const servicesData = {
 const eventsData = {
     'sewing_training': {
         title: 'Women Sewing Machine Training & Certification',
-        image: '/sewing_training.jpg', // Main image for event card
+        image: '/sweeing 1.jpg', // Main image for event card
         shortDescription: 'Free 5-month training course with free machine distribution and certification.',
         status: 'Duration: July 2025 - November 2025',
         details: {
