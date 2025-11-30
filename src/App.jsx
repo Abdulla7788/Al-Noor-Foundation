@@ -258,7 +258,7 @@ const GlobalStyles = () => (
     }
     .hero-bg-animated {
         animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 150%;
+        background-size: 150% 100%;
     }
 
     .gallery-item-overlay {
@@ -315,6 +315,39 @@ const GlobalStyles = () => (
       100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
     }
 
+    .dropdown {
+        position: relative;
+    }
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 1rem;
+        background-color: #1e1e1e;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        z-index: 50;
+        min-width: 160px;
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+    .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+    .dropdown-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        white-space: nowrap;
+        color: var(--color-text);
+    }
+    .dropdown-item:hover {
+        background-color: rgba(255,255,255,0.1);
+    }
+    
     /* Auto-scrolling quotations */
     .quotations-container {
         overflow: hidden;
@@ -490,7 +523,7 @@ const eventsData = {
         title: 'Women Sewing Machine Training & Certification',
         image: '/sewing_training.jpg', // Main image for event card
         shortDescription: 'Free 5-month training course with free machine distribution and certification.',
-        status: 'Duration: August 2025 - November 2025',
+        status: 'Duration: July 2025 - November 2025',
         details: {
             members: 'Total 150 members are learning.',
             timings: 'Batch 1: 10:00 AM - 1:00 PM | Batch 2: 1:00 PM - 5:00 PM',
@@ -504,7 +537,7 @@ const eventsData = {
 
 // --- PAGE COMPONENTS ---
 const HomePage = ({ onNavigate }) => (
-    <div className="page-container">
+    <div className="page-containe">
         {/* Hero Section */}
         <div className="relative min-h-screen flex items-center justify-center text-white text-center px-4 overflow-hidden">
             <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/backgroundImage.jpg')" }}></div>
@@ -630,7 +663,6 @@ const AboutPage = () => (
                             <h4 className="font-bold text-lg">SHAIK JANI</h4>
                             <p className="text-sm text-text-muted">FINANCE & ACCOUNTANT</p>
                         </div>
-                        
                     </div>
                 </div>
             </FadeInSection>
@@ -726,7 +758,7 @@ const InvolvedPage = () => {
 
         const messageText = `New Volunteer Application:\n\n*Name:*\n${formData.name}\n\n*Email:*\n${formData.email}\n\n*Phone:*\n${formData.phone}\n\n*Area of Interest:*\n${formData.interest}\n\n*Why do you want to volunteer:*\n${formData.message}`;
         const encodedMessage = encodeURIComponent(messageText);
-        const phoneNumber = "917997666551"; // <-- UPDATED PHONE NUMBER
+        const phoneNumber = "917997666551"; // Country code + phone number
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
         
@@ -1042,22 +1074,27 @@ const ContactPage = () => {
         window.open(whatsappUrl, '_blank');
 
         // --- Step 2: Attempt to send email in the background ---
+
         // =================================================================================
         // --- EmailJS Configuration ---
+        // IMPORTANT: Replace these with your actual IDs from your EmailJS account.
         // See the email_setup_guide.md file for instructions.
         const serviceID = 'YOUR_SERVICE_ID';
-        const templateID = 'template_0tdjtjh'; // For notification TO YOU
-        const autoReplyTemplateID = 'template_ispse8i'; // For auto-reply TO USER
-        const userID = 'YOUR_PUBLIC_KEY'; // This is also called Public Key
+        const templateID = 'YOUR_TEMPLATE_ID';
+        const userID = 'YOUR_PUBLIC_KEY'; // This is also called Public Key in new accounts
         // =================================================================================
 
-        if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'template_0tdjtjh' || userID === 'YOUR_PUBLIC_KEY' || autoReplyTemplateID === 'YOUR_AUTOREPLY_TEMPLATE_ID') {
-            console.error('EmailJS Error: Please configure your EmailJS keys and template IDs in the code.');
-            setStatus('success'); // Still a success because WhatsApp opened.
+        // Check if the placeholder values have been changed.
+        if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'YOUR_TEMPLATE_ID' || userID === 'YOUR_PUBLIC_KEY') {
+            console.error('EmailJS Error: Please replace the placeholder Service ID, Template ID, and Public Key in the code with your actual keys from your EmailJS account.');
+            // We opened WhatsApp, so we can consider this a partial success for the user.
+            // We will just reset the form and show a success message that implies the main action worked.
+            setStatus('success'); 
             setFormData({ name: '', email: '', message: '' });
             return; 
         }
 
+        // Check if emailjs script is loaded
         if (!window.emailjs) {
             console.error('EmailJS script has not loaded yet.');
             setStatus('success'); // Still a success because WhatsApp opened.
@@ -1065,39 +1102,21 @@ const ContactPage = () => {
             return;
         }
 
-        // --- Send Notification Email (To You) ---
-        const notificationParams = {
+        const templateParams = {
             from_name: formData.name,
             from_email: formData.email,
             message: formData.message,
-            to_email: 'foundationalnoor@gmail.com' // <-- UPDATED EMAIL
+            to_email: 'shaikabdulla1199@gmail.com'
         };
-        
-        window.emailjs.send(serviceID, templateID, notificationParams, userID)
+
+        window.emailjs.send(serviceID, templateID, templateParams, userID)
             .then((response) => {
-                console.log('Notification email successfully sent!', response.status, response.text);
-                
-                // --- Send Auto-Reply Email (To User) ---
-                const autoReplyParams = {
-                    from_name: "Al-Noor Foundation",
-                    to_name: formData.name,
-                    to_email: formData.email,
-                    message: "Thank you for contacting us. We have received your message and will get back to you soon."
-                };
-
-                window.emailjs.send(serviceID, autoReplyTemplateID, autoReplyParams, userID)
-                    .then((response) => {
-                        console.log('Auto-reply email successfully sent!', response.status, response.text);
-                    }, (err) => {
-                        console.error('Failed to send auto-reply email. Error: ', err);
-                    });
-
+                console.log('Email successfully sent!', response.status, response.text);
                 setStatus('success');
                 setFormData({ name: '', email: '', message: '' });
-
             }, (err) => {
-                console.error('Failed to send notification email. Error: ', err);
-                setStatus('error'); // Show error only if main email fails
+                console.error('Failed to send email. Error: ', err);
+                setStatus('error'); // Show error only if email fails
             });
     };
     
@@ -1109,7 +1128,7 @@ const ContactPage = () => {
                         <i className="fas fa-check-circle"></i>
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
-                    <p className="text-text-muted">Thank you for reaching out. We will get back to you soon. We have also opened WhatsApp for you to send the message directly.</p>
+                    <p className="text-text-muted">Thank you for reaching out. We have opened WhatsApp for you to send the message directly.</p>
                 </div>
             );
         }
@@ -1121,7 +1140,7 @@ const ContactPage = () => {
                         <i className="fas fa-exclamation-circle"></i>
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Email Failed</h2>
-                    <p className="text-text-muted">Your message was sent to WhatsApp, but the email notification could not be delivered. Please check your EmailJS keys.</p>
+                    <p className="text-text-muted">Your message was sent to WhatsApp, but the email could not be delivered. Please check your EmailJS keys.</p>
                 </div>
             );
         }
@@ -1194,9 +1213,9 @@ const ContactPage = () => {
                     <FadeInSection delay={100}>
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
-                            <p className="mb-4 flex items-start"><i className="fas fa-map-marker-alt mr-3 mt-1 text-cyan-500"></i><span>D.No: 1-45, Madinapadu Village,<br/>Dachepalli Mandal, Palnadu District,<br/>Andhra Pradesh, India<br/>pin-522414 </span></p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-phone mr-3 text-cyan-500"></i> (+91)7997666551</p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-envelope mr-3 text-cyan-500"></i>foundationalnoor@gmail.com</p>
+                            <p className="mb-4 flex items-start"><i className="fas fa-map-marker-alt mr-3 mt-1 text-cyan-500 dark:text-cyan-400"></i><span>D.No: 1-45, Madinapadu Village,<br/>Dachepalli Mandal, Palnadu District,<br/>Andhra Pradesh, India<br/>pin-522414 </span></p>
+                            <p className="mb-4 flex items-center"><i className="fas fa-phone mr-3 text-cyan-500 dark:text-cyan-400"></i> (+91)7997666551</p>
+                            <p className="mb-4 flex items-center"><i className="fas fa-envelope mr-3 text-cyan-500 dark:text-cyan-400"></i>foundationalnoor@gmail.com</p>
                             <div className="mt-8">
                                 <h4 className="font-bold mb-4">Follow Us</h4>
                                 <div className="flex space-x-4">
@@ -1501,7 +1520,7 @@ const Footer = ({ onNavigate }) => {
 
         const templateParams = {
             subscriber_email: email,
-            to_email: 'foundationalnoor@gmail.com'
+            to_email: 'shaikabdulla1199@gmail.com'
         };
 
         window.emailjs.send(serviceID, templateID, templateParams, userID)
@@ -1557,9 +1576,6 @@ const Footer = ({ onNavigate }) => {
                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('events')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Events</button></li>
                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('contact')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Contact</button></li>
                              <li><button onClick={(e) => {e.preventDefault(); onNavigate('terms')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Terms & Conditions</button></li>
-                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('privacy')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Privacy Policy</button></li>
-                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('refund')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Refund Policy</button></li>
-                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('shipping')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Shipping Policy</button></li>
                         </ul>
                     </div>
                     <div>
@@ -1744,4 +1760,3 @@ export default function App() {
         </>
     );
 }
-
