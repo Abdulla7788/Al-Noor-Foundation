@@ -480,7 +480,7 @@ const servicesData = {
     },
     'sewing_training': {
         title: 'Women Sewing Machine Training & Certification',
-        image: '/sweing2.jpg',
+        image: '/clothes.jpg',
         description: 'Empowering women through vocational training is a core initiative. Our program provides comprehensive training in operating sewing machines, enabling women to gain valuable skills for self-employment and economic independence. Upon completion, participants receive certification, opening doors to new opportunities.'
     }
 }
@@ -488,15 +488,15 @@ const servicesData = {
 const eventsData = {
     'sewing_training': {
         title: 'Women Sewing Machine Training & Certification',
-        image: '/sweeing 1.jpg', // Main image for event card
+        image: '/sewing_training.jpg', // Main image for event card
         shortDescription: 'Free 5-month training course with free machine distribution and certification.',
         status: 'Duration: August 2025 - November 2025',
         details: {
             members: 'Total 150 members are learning.',
             timings: 'Batch 1: 10:00 AM - 1:00 PM | Batch 2: 1:00 PM - 5:00 PM',
             venue: 'Near Noor Masjid, Madinapadu Road, Dachepalli',
-            image: '/SWEEING.jpg', // Glimpse image
-            certificate: '/certificate.png' // Certificate image
+            image: '/sewing_training_glimpse.jpg', // Glimpse image
+            certificate: '/certificate.jpg' // Certificate image
         }
     }
 }
