@@ -708,7 +708,7 @@ const ProgramsPage = ({ onNavigate }) => (
                 </FadeInSection>
                 <FadeInSection delay={300}>
                     <div className="bg-card-background shadow-lg overflow-hidden card-hover">
-                        <img src="/clothes.jpg" alt="Women Sewing Machine Training" className="w-full h-48 object-cover" />
+                        <img src="/SWEEING.jpg" alt="Women Sewing Machine Training" className="w-full h-48 object-cover" />
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Women Sewing Machine Training & Certification</h3>
                             <p className="text-text-muted mb-4">Empowering women through vocational training to gain valuable skills for self-employment and economic independence.</p>
@@ -1007,9 +1007,9 @@ const EventsPage = ({ onNavigate }) => (
             <p className="section-subtitle">Stay updated with our latest activities, stories of impact, and upcoming events.</p>
             <FadeInSection>
                 <div className="max-w-4xl mx-auto bg-card-background rounded-xl shadow-lg overflow-hidden md:flex mb-8 card-hover">
-                    <img src={eventsData.sewing_training.image} alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
+                    <img src="/sweing2.jpg" alt={eventsData.sewing_training.title} className="md:w-1/3 object-cover" />
                     <div className="p-6 md:p-8">
-                        <p className="text-sm text-yellow-500 font-semibold mb-1">ONGOING</p>
+                        <p className="text-sm text-yellow-500 font-semibold mb-1">COMPLETED</p>
                         <h3 className="text-2xl font-bold mb-2">{eventsData.sewing_training.title}</h3>
                         <p className="text-text-muted mb-2">Status: {eventsData.sewing_training.status}</p>
                         <p className="text-text-muted mb-4">{eventsData.sewing_training.shortDescription}</p>
@@ -1035,9 +1035,9 @@ const EventDetailsPage = ({ event, onNavigate }) => (
                     <p><strong>Venue:</strong> {event.details.venue}</p>
                 </div>
                  <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
-                <img src={event.details.image} alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
+                <img src="/sweing2.jpg"alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
                 <h2 className="text-2xl font-bold mt-12 mb-4">Certification of Completion</h2>
-                <img src={event.details.certificate} alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
+                <img src="/certificate.png" alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
             </FadeInSection>
         </div>
     </div>
