@@ -1,408 +1,258 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // Firebase imports are removed as login is removed
 
 // STYLES - All CSS from the original file is placed here
 const GlobalStyles = () => (
-  <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+    <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
     @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
 
     :root {
-        /* Fixed Dark Theme - Higher Contrast */
-        --color-primary: #BBDEFB; /* Light Blue */
-        --color-secondary: #FFD54F; /* Lighter Amber */
-        --color-accent: #64B5F6; /* Lighter Bright Blue */
-        --color-background: #121212; /* Nearly Black */
-        --color-text: #F9FAFB; /* Off-white (Gray 50) */
-        --color-text-muted: #D1D5DB; /* Brighter Gray (Gray 300) */
-        --color-card-background: #1e1e1e;
+        /* Futuristic Dark Theme */
+        --color-bg-dark: #0B0E14; /* Deep Tech Black */
+        --color-bg-card: #151A23; /* Lighter Black for cards */
+        --color-primary: #00E5FF; /* Neon Cyan */
+        --color-secondary: #7C4DFF; /* Neon Purple */
+        --color-accent: #FFD600; /* Electric Amber */
+        --color-text-main: #FFFFFF;
+        --color-text-muted: #9CA3AF;
+        
+        --glass-bg: rgba(21, 26, 35, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --neon-shadow: 0 0 10px rgba(0, 229, 255, 0.5), 0 0 20px rgba(0, 229, 255, 0.3);
     }
     
     html {
         scroll-behavior: smooth;
-        background-color: var(--color-background);
-        color: var(--color-text);
     }
 
     body {
-        font-family: 'Poppins', sans-serif;
+        background-color: var(--color-bg-dark);
+        color: var(--color-text-main);
+        font-family: 'Outfit', sans-serif;
+        margin: 0;
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        color: var(--color-text);
+        overflow-x: hidden;
     }
-    
-    /* Modern Button Styles */
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--color-bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-secondary);
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+    }
+
+    /* UTILITIES */
+    .text-gradient {
+        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* BUTTONS */
     .btn {
-        padding: 0.75rem 1.75rem;
-        border-radius: 9999px;
+        padding: 0.8rem 2rem;
+        border-radius: 9999px; // Pill shape
         font-weight: 600;
-        transition: all 0.3s ease-in-out;
-        transform-origin: center;
-        border: 2px solid transparent;
         letter-spacing: 0.5px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
+        z-index: 1;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-size: 1rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
     }
-    .btn:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-    }
-    .btn:hover {
-        transform: scale(1.05) translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    .btn:focus {
-        outline: none;
-        box-shadow: 0 0 0 4px var(--color-accent);
-    }
 
     .btn-primary {
-        background-image: linear-gradient(45deg, var(--color-secondary), #FFCA28);
-        color: #111827;
-        box-shadow: 0 4px 15px rgba(255, 213, 79, 0.3);
+        background: transparent;
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+    }
+    
+    .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: var(--color-primary);
+        z-index: -1;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease-out;
+    }
+
+    .btn-primary:hover {
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+    }
+
+    .btn-primary:hover::before {
+        transform: scaleX(1);
     }
 
     .btn-secondary {
-        background-color: transparent;
-        border-color: var(--color-secondary);
-        color: var(--color-secondary);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        backdrop-filter: blur(5px);
     }
-     .btn-secondary:hover {
-        background-color: var(--color-secondary);
-        color: #111827;
-        box-shadow: 0 8px 15px rgba(255, 213, 79, 0.2);
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--color-text-main);
+        transform: translateY(-2px);
     }
-    
-    /* Modern Section Titles with Gradient */
+
+    /* SECTIONS */
     .section-title {
-        font-size: 2.5rem;
+        font-size: 3rem;
         font-weight: 800;
+        text-align: center;
         margin-bottom: 1rem;
-        text-align: center;
-        letter-spacing: -1px;
-        background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    
-    .section-subtitle {
-        font-size: 1.125rem;
-        text-align: center;
-        max-width: 48rem;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 3rem;
-        color: var(--color-text-muted);
-    }
-    
-    /* Modern Nav Link */
-    .nav-link {
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 2px;
         position: relative;
-        padding: 0.5rem 0.25rem;
-        margin: 0 0.75rem;
-        transition: color 0.3s;
-        font-weight: 500;
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        color: var(--color-primary);
-    }
-    .nav-link:hover { color: var(--color-accent); }
-    
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: -4px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: var(--color-accent);
-        transition: width 0.3s ease-in-out;
-    }
-    
-    .nav-link:hover::after, .nav-link.active::after {
+        display: inline-block;
         width: 100%;
     }
     
+    .section-title span {
+        background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: var(--color-text-muted);
+        max-width: 600px;
+        margin: 0 auto 4rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    /* GLASS CARDS */
+    .glass-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(12px);
+        border-radius: 16px;
+        transition: all 0.4s ease;
+        overflow: hidden;
+    }
+    
+    .glass-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--color-primary);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .card-hover { /* Legacy support or alias */
+        background: var(--color-bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-5px);
+        border-color: var(--color-secondary);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+
+    /* NAVIGATION */
+    .nav-link {
+        color: var(--color-text-muted);
+        font-weight: 500;
+        transition: color 0.3s;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+    }
+    .nav-link:hover, .nav-link.active {
+        color: var(--color-primary);
+        text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+    }
+
+    /* INPUTS */
+    .modern-input {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        color: white;
+        transition: all 0.3s;
+    }
+    .modern-input:focus {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1);
+        outline: none;
+    }
+
+    /* ANIMATIONS */
     .fade-in-section {
         opacity: 0;
-        transform: translateY(40px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
     }
     .fade-in-section.visible {
         opacity: 1;
         transform: translateY(0);
     }
-    
-    #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
+
+    @keyframes neon-pulse {
+        0%, 100% { box-shadow: 0 0 5px var(--color-primary), 0 0 10px var(--color-primary); }
+        50% { box-shadow: 0 0 2px var(--color-primary), 0 0 5px var(--color-primary); }
+    }
+
+    /* IMAGE ALIGNMENT UTILS */
+    .img-cover {
         width: 100%;
         height: 100%;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 0.7s ease, visibility 0.7s ease;
-        background-color: var(--color-background);
-    }
-    .loader-ring {
-        display: inline-block;
-        position: relative;
-        width: 80px;
-        height: 80px;
-    }
-    .loader-ring div {
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        width: 64px;
-        height: 64px;
-        margin: 8px;
-        border: 8px solid;
-        border-radius: 50%;
-        animation: loader-ring-anim 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: var(--color-secondary) transparent transparent transparent;
-    }
-    .loader-ring div:nth-child(1) { animation-delay: -0.45s; }
-    .loader-ring div:nth-child(2) { animation-delay: -0.3s; }
-    .loader-ring div:nth-child(3) { animation-delay: -0.15s; }
-    @keyframes loader-ring-anim {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        object-fit: cover;
     }
     
-    /* Modern Card Hover Effect */
-    .card-hover {
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-        border-radius: 0.75rem;
-        background-color: var(--color-card-background);
-        box-shadow: 0 1px 2px 0 rgb(255 255 255 / 0.05);
-    }
-    .card-hover:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    }
-
-    .page-container {
-        animation: page-fade-in 0.6s ease-in-out;
-    }
-    @keyframes page-fade-in {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .lightbox {
-        position: fixed;
-        inset: 0;
-        background-color: rgba(17, 24, 39, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-        z-index: 50;
-    }
-    .lightbox img {
-        max-width: 90vw;
-        max-height: 90vh;
-        border-radius: 0.5rem;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    }
-    .lightbox-close {
-        position: absolute;
-        top: 1.25rem;
-        right: 1.25rem;
-        color: white;
-        font-size: 2.25rem;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-    .lightbox-close:hover {
-        transform: scale(1.2);
-    }
-    
-    .faq-item details > summary {
-        list-style: none;
-    }
-    .faq-item details > summary::-webkit-details-marker {
-        display: none;
-    }
-    .faq-item .icon-plus {
-        transition: transform 0.3s ease;
-    }
-    .faq-item details[open] summary .icon-plus {
-        transform: rotate(45deg);
-    }
-
-    .modern-input {
-        background-color: #374151;
-        border: 2px solid transparent;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        color: var(--color-text);
-    }
-    .modern-input:focus {
-        outline: none;
-        border-color: var(--color-accent);
-        box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2);
-    }
-
-    @keyframes hero-bg-pan {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    .hero-bg-animated {
-        animation: hero-bg-pan 40s ease-in-out infinite;
-        background-size: 150% 100%;
-    }
-
-    .gallery-item-overlay {
-        position: absolute;
-        inset: 0;
-        background-color: rgba(0,0,0,0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.5rem;
-        opacity: 0;
-        transition: opacity 0.4s ease;
-    }
-    .group:hover .gallery-item-overlay {
-        opacity: 1;
-    }
-
-    .impact-icon-container {
-        transition: transform 0.3s ease;
-    }
-    .impact-icon-container:hover {
-        transform: scale(1.1);
-    }
-    
-    .spinner {
-      animation: rotate 2s linear infinite;
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-    }
-    .spinner .path {
-      stroke: #fff;
-      stroke-linecap: round;
-      animation: dash 1.5s ease-in-out infinite;
-    }
-    .spinner-small {
-      animation: rotate 1.5s linear infinite;
-      width: 16px;
-      height: 16px;
-    }
-    .spinner-small .path {
-      stroke: #1f2937;
-      stroke-linecap: round;
-      animation: dash 1.5s ease-in-out infinite;
-    }
-
-    @keyframes rotate {
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes dash {
-      0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
-      50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
-      100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
-    }
-
-    .dropdown {
-        position: relative;
-    }
-    .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        margin-top: 1rem;
-        background-color: #1e1e1e;
-        border-radius: 0.5rem;
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        z-index: 50;
-        min-width: 160px;
-        opacity: 0;
-        transform: translateY(-10px);
-        visibility: hidden;
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-    }
-    .dropdown:hover .dropdown-menu {
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
-    }
-    .dropdown-item {
-        display: block;
-        padding: 0.75rem 1rem;
-        white-space: nowrap;
-        color: var(--color-text);
-    }
-    .dropdown-item:hover {
-        background-color: rgba(255,255,255,0.1);
-    }
-    
-    /* Auto-scrolling quotations */
-    .quotations-container {
-        overflow: hidden;
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-        position: relative;
+    .aspect-video-card {
+        aspect-ratio: 16 / 9;
         width: 100%;
-    }
-    .quotations-container:hover .quotations-track {
-        animation-play-state: paused;
-    }
-    .quotations-container::before,
-    .quotations-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 15rem;
-        z-index: 2;
-    }
-    .quotations-container::before {
-        left: 0;
-        background: linear-gradient(to right, var(--color-card-background), transparent);
-    }
-    .quotations-container::after {
-        right: 0;
-        background: linear-gradient(to left, var(--color-card-background), transparent);
+        overflow: hidden;
     }
 
-    .quotations-track {
-        display: flex;
-        width: calc(400px * 12); /* Card width * number of cards (6 original + 6 duplicates) */
-        animation: scroll 80s linear infinite;
+    /* Floating Navigation Buttons */
+    .fixed-floating-btn {
+        position: fixed;
+        bottom: 1.5rem;
+        z-index: 9999;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
     }
-
-    @keyframes scroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(calc(-400px * 6)); /* Scroll by the width of the original 6 cards */
-        }
+    
+    .floating-left {
+        left: 1.5rem;
     }
-
-    .quote-card {
-        width: 400px;
-        flex-shrink: 0;
-        padding: 2rem;
-        margin: 0 1rem;
-        background-color: var(--color-background);
-        border-radius: 0.75rem;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    
+    .floating-right {
+        right: 1.5rem;
+    }
+    
+    /* Ensure they don't overlap on very small screens */
+    @media (max-width: 350px) {
+        .floating-left { bottom: 5rem; left: 50%; transform: translateX(-50%); }
+        .floating-right { bottom: 1.5rem; left: 50%; right: auto; transform: translateX(-50%); }
     }
   `}</style>
 );
@@ -434,27 +284,27 @@ const useIntersectionObserver = (options) => {
 
 // --- HELPER HOOK for Dynamic Script Loading ---
 const useScript = (url) => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = url;
-    script.async = true;
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.async = true;
 
-    document.body.appendChild(script);
+        document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [url]);
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, [url]);
 };
 
 // --- REUSABLE COMPONENTS ---
 const FadeInSection = ({ children, delay = 0 }) => {
     const [ref, entry] = useIntersectionObserver({ threshold: 0.1 });
     const isVisible = !!entry;
-    
+
     return (
-        <div 
-            ref={ref} 
+        <div
+            ref={ref}
             className={`fade-in-section ${isVisible ? 'visible' : ''}`}
             style={{ transitionDelay: `${delay}ms` }}
         >
@@ -487,7 +337,7 @@ const AnimatedCounter = ({ target }) => {
                     setCount(Math.ceil(start));
                 }
             }, incrementTime);
-            
+
             return () => clearInterval(timer);
         }
     }, [isVisible, target]);
@@ -537,75 +387,119 @@ const eventsData = {
 
 // --- PAGE COMPONENTS ---
 const HomePage = ({ onNavigate }) => (
-    <div className="page-containe">
+    <div className="page-container">
         {/* Hero Section */}
         <div className="relative min-h-screen flex items-center justify-center text-white text-center px-4 overflow-hidden">
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg-animated" style={{ backgroundImage: "url('/backgroundImage.jpg')" }}></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-            <div className="relative z-10">
-                <h1 className="text-4xl md:text-7xl font-extrabold leading-tight mb-4 tracking-tighter">Serving Humanity, Spreading Light</h1>
-                <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-slate-300">Al-Noor Foundation is committed to creating lasting change through education, healthcare, and relief programs for communities in need.</p>
-                <div className="space-x-4">
-                    <button onClick={() => onNavigate('involved')} className="btn btn-primary">Join Us</button>
-                    <button onClick={() => onNavigate('donate')} className="btn btn-secondary">Donate Now</button>
+            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/backgroundImage.jpg')" }}></div>
+            {/* Added a solid overlay backup just in case image fails, and gradient for text readability and to darken image for text contrast */}
+            <div className="absolute inset-0 bg-black/50"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0E14] via-transparent to-black/30"></div>
+
+            <div className="relative z-10 max-w-4xl mx-auto mt-20">
+                <span className="inline-block py-1 px-3 rounded-full bg-cyan-500/20 text-cyan-300 text-sm font-semibold mb-6 border border-cyan-500/30 backdrop-blur-sm animate-pulse">
+                    EST. 2025
+                </span>
+                <h1 className="text-5xl md:text-8xl font-black leading-tight mb-6 tracking-tighter drop-shadow-2xl">
+                    <span className="text-white">Serving</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Humanity</span>
+                </h1>
+                <p className="text-lg md:text-2xl max-w-2xl mx-auto mb-10 text-slate-300 leading-relaxed font-light">
+                    Igniting hope and creating lasting change through education, healthcare, and sustainable relief programs.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onClick={() => onNavigate('involved')} className="btn btn-primary min-w-[180px]">Join the Mission</button>
+                    <button onClick={() => onNavigate('donate')} className="btn btn-secondary min-w-[180px]">Make an Impact</button>
                 </div>
             </div>
         </div>
 
         {/* Mission and Vision */}
-        <section className="py-24 bg-card-background">
-            <div className="container mx-auto px-6">
-                <div className="grid md:grid-cols-2 gap-16 items-center">
+        <section className="py-32 bg-background relative overflow-hidden">
+            {/* Decorative Elements */}
+            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <div className="grid md:grid-cols-2 gap-20 items-center">
                     <FadeInSection>
-                        <h2 className="section-title text-left">Our Mission & Vision</h2>
-                        <p className="mb-4 text-text-muted">Our mission is to empower vulnerable communities by providing sustainable solutions in education, healthcare, and social welfare. We envision a world where every individual has the opportunity to thrive with dignity and hope.</p>
-                        <p className="text-text-muted">We believe in a hands-on approach, working directly with local partners to ensure our efforts are effective and culturally sensitive.</p>
+                        <h2 className="section-title text-left text-4xl mb-8"><span className="text-white">Our</span> <span>Vision</span></h2>
+                        <div className="glass-card p-8 rounded-2xl relative">
+                            <i className="fas fa-quote-left text-4xl text-cyan-500/20 absolute top-4 left-4"></i>
+                            <p className="mb-6 text-lg leading-relaxed text-gray-300 relative z-10">
+                                "Our mission is to empower vulnerable communities by providing sustainable solutions. We envision a world where every individual has the opportunity to thrive with dignity."
+                            </p>
+                        </div>
+                        <div className="mt-8 flex gap-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+                                    <i className="fas fa-hand-holding-heart"></i>
+                                </div>
+                                <span className="font-semibold">Compassion</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                    <i className="fas fa-globe"></i>
+                                </div>
+                                <span className="font-semibold">Impact</span>
+                            </div>
+                        </div>
                     </FadeInSection>
                     <FadeInSection>
-                        <img src="/Community.jpg" alt="Community Empowerment" className="rounded-xl shadow-2xl w-full h-full object-cover" />
+                        <div className="relative rounded-2xl overflow-hidden glass-card p-2 border border-white/10">
+                            <img src="/Community.jpg" alt="Community Empowerment" className="rounded-xl w-full h-[500px] object-cover hover:scale-105 transition-transform duration-700" />
+                        </div>
                     </FadeInSection>
                 </div>
             </div>
         </section>
-        
+
         {/* Impact Numbers */}
-        <section className="py-24">
-            <div className="container mx-auto px-6 text-center">
-                <h2 className="section-title">Our Impact in Numbers</h2>
-                <p className="section-subtitle">Your support translates into real, tangible change for countless lives.</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                     <FadeInSection>
-                        <div className="p-4 impact-icon-container">
-                            <i className="fas fa-child text-5xl text-yellow-400 mb-4"></i>
-                            <AnimatedCounter target={500} />
-                            <p className="text-lg">Children Educating</p>
-                        </div>
-                    </FadeInSection>
-                     <FadeInSection delay={100}>
-                        <div className="p-4 impact-icon-container">
-                            <i className="fas fa-notes-medical text-5xl text-yellow-400 mb-4"></i>
-                            <AnimatedCounter target={100} />
-                            <p className="text-lg">Womens Training </p>
-                        </div>
-                    </FadeInSection>
-                    <FadeInSection delay={200}>
-                        <div className="p-4 impact-icon-container">
-                            <i className="fas fa-hand-holding-water text-5xl text-yellow-400 mb-4"></i>
-                             <AnimatedCounter target={50} />
-                            <p className="text-lg">Wells Built</p>
-                        </div>
-                    </FadeInSection>
-                    <FadeInSection delay={300}>
-                        <div className="p-4 impact-icon-container">
-                            <i className="fas fa-hands-helping text-5xl text-yellow-400 mb-4"></i>
-                            <AnimatedCounter target={8000} />
-                            <p className="text-lg">Families Supported</p>
-                        </div>
-                    </FadeInSection>
+        {/* Impact Numbers */}
+        <section className="py-32 relative overflow-hidden bg-[#0B0E14]">
+            {/* Background Effects */}
+            <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <div className="text-center mb-20">
+                    <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tight">
+                        <span className="text-white">OUR IMPACT IN</span> <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600">NUMBERS</span>
+                    </h2>
+                    <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light">
+                        Your support translates into real, tangible change for countless lives.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                    {[
+                        { icon: 'child', count: 500, label: 'Children Educating', color: 'from-amber-400 to-orange-500' },
+                        { icon: 'plus-square', count: 100, label: 'Womens Training', color: 'from-blue-400 to-cyan-500' },
+                        { icon: 'hand-holding-water', count: 50, label: 'Wells Built', color: 'from-cyan-400 to-teal-500' },
+                        { icon: 'hands-helping', count: 8000, label: 'Families Supported', color: 'from-purple-400 to-pink-500' }
+                    ].map((item, index) => (
+                        <FadeInSection key={index} delay={index * 100}>
+                            <div className="glass-card p-10 rounded-3xl text-center group hover:-translate-y-2 transition-transform duration-500 border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
+                                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${item.color} opacity-50 group-hover:opacity-100 transition-opacity`}></div>
+
+                                <div className="mb-6 relative inline-block">
+                                    <div className={`text-5xl bg-clip-text text-transparent bg-gradient-to-br ${item.color} drop-shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+                                        <i className={`fas fa-${item.icon}`}></i>
+                                    </div>
+                                    <div className={`absolute -inset-4 bg-gradient-to-r ${item.color} opacity-20 blur-xl rounded-full group-hover:opacity-40 transition-opacity`}></div>
+                                </div>
+
+                                <div className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
+                                    <AnimatedCounter target={item.count} />
+                                    <span className={`text-2xl text-transparent bg-clip-text bg-gradient-to-r ${item.color}`}>+</span>
+                                </div>
+                                <p className="text-gray-400 font-medium tracking-wide uppercase text-sm mt-2 group-hover:text-white transition-colors">{item.label}</p>
+                            </div>
+                        </FadeInSection>
+                    ))}
                 </div>
             </div>
         </section>
-        
+
         {/* Quotations Section */}
         <Quotations />
     </div>
@@ -616,7 +510,7 @@ const AboutPage = () => (
         <div className="container mx-auto px-6">
             <h1 className="section-title">About Al-Noor Foundation</h1>
             <p className="section-subtitle">Discover our journey, our values, and the dedicated people behind our work.</p>
-            
+
             <FadeInSection>
                 <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
                     <div>
@@ -637,7 +531,7 @@ const AboutPage = () => (
                     </div>
                 </div>
             </FadeInSection>
-            
+
             <FadeInSection>
                 <div className="mt-24">
                     <h2 className="section-title">Our Team</h2>
@@ -648,17 +542,17 @@ const AboutPage = () => (
                             <h4 className="font-bold text-lg">WASIM AKRAM</h4>
                             <p className="text-sm text-text-muted">Director of Operations</p>
                         </div>
-                         <div className="text-center group">
+                        <div className="text-center group">
                             <img src="/secretary.jpg" alt="Team Member 2" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
                             <h4 className="font-bold text-lg">SHAIK FAYAZUDDIN</h4>
                             <p className="text-sm text-text-muted">SECRETARY</p>
                         </div>
-                         <div className="text-center group">
+                        <div className="text-center group">
                             <img src="/LADIE.jpg" alt="Team Member 3" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
                             <h4 className="font-bold text-lg">SHAIK JAITHUNBI</h4>
                             <p className="text-sm text-text-muted">LEAD VOLUNTEER</p>
                         </div>
-                         <div className="text-center group">
+                        <div className="text-center group">
                             <img src="/finance.jpg" alt="Team Member 4" className="w-32 h-35 rounded-full mx-auto mb-4 shadow-md transition-transform duration-300 group-hover:scale-110 object-cover" />
                             <h4 className="font-bold text-lg">SHAIK JANI</h4>
                             <p className="text-sm text-text-muted">FINANCE & ACCOUNTANT</p>
@@ -692,17 +586,17 @@ const ProgramsPage = ({ onNavigate }) => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Bore wells implementation</h3>
                             <p className="text-text-muted mb-4">Implementing bore wells in remote areas, to provide clean and safe drinking water.</p>
-                             <button onClick={() => onNavigate('service-details', { serviceId: 'borewell' })} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
+                            <button onClick={() => onNavigate('service-details', { serviceId: 'borewell' })} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
                         </div>
                     </div>
                 </FadeInSection>
-                 <FadeInSection delay={200}>
+                <FadeInSection delay={200}>
                     <div className="bg-card-background shadow-lg overflow-hidden card-hover">
                         <img src="/festival grocorries.jpg" alt="Festival Groceries" className="w-full h-48 object-cover" />
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Festival Groceries Distribution</h3>
                             <p className="text-text-muted mb-4">Distributing all home needed groceries for festival of " RAMADAN " to all the individuals and families.</p>
-                             <button onClick={() => onNavigate('service-details', { serviceId: 'groceries' })} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
+                            <button onClick={() => onNavigate('service-details', { serviceId: 'groceries' })} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
                         </div>
                     </div>
                 </FadeInSection>
@@ -712,7 +606,7 @@ const ProgramsPage = ({ onNavigate }) => (
                         <div className="p-6">
                             <h3 className="text-xl font-bold mb-2">Women Sewing Machine Training & Certification</h3>
                             <p className="text-text-muted mb-4">Empowering women through vocational training to gain valuable skills for self-employment and economic independence.</p>
-                             <button onClick={() => onNavigate('service-details', { serviceId: 'sewing_training' })} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
+                            <button onClick={() => onNavigate('service-details', { serviceId: 'sewing_training' })} className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Learn More <i className="fas fa-arrow-right ml-1"></i></button>
                         </div>
                     </div>
                 </FadeInSection>
@@ -761,7 +655,7 @@ const InvolvedPage = () => {
         const phoneNumber = "917997666551"; // Country code + phone number
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
-        
+
         // Optionally, reset form and show success. For this simple setup, WhatsApp opening is the primary confirmation.
         setStatus('success');
         setFormData({ name: '', email: '', phone: '', interest: '', message: '' });
@@ -825,7 +719,7 @@ const InvolvedPage = () => {
 
     return (
         <div className="page-container py-24">
-             <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6">
                 <h1 className="section-title">Get Involved</h1>
                 <p className="section-subtitle">You have the power to change lives. Join our community of volunteers, partners, and advocates.</p>
                 <FadeInSection>
@@ -842,11 +736,13 @@ const InvolvedPage = () => {
 const DonatePage = () => {
     const [amount, setAmount] = useState(500);
     const [customAmount, setCustomAmount] = useState('');
-    const [viewState, setViewState] = useState('amount_selection'); // 'amount_selection', 'success'
     const [amountError, setAmountError] = useState('');
-    const presetAmounts = [500, 1000, 2500, 5000];
 
-    useScript('https://checkout.razorpay.com/v1/checkout.js');
+    // REPLACE WITH YOUR ACTUAL UPI ID
+    const UPI_ID = "917997666551@ybl";
+    const PAYEE_NAME = "Al-Noor Foundation";
+
+    const presetAmounts = [100, 500, 1000, 2000, 5000];
 
     const handleAmountClick = (value) => {
         setAmount(value);
@@ -859,141 +755,123 @@ const DonatePage = () => {
         setCustomAmount(value);
         if (value && !isNaN(value)) {
             const numValue = parseInt(value, 10);
-            if (numValue >= 100) {
-                setAmount(numValue);
-                setAmountError('');
-            } else {
-                setAmountError('Amount must be at least ₹100');
-            }
+            setAmount(numValue);
+            setAmountError(numValue < 1 ? 'Amount must be valid' : '');
         } else if (!value) {
-            setAmountError('');
-            setAmount(500); // Reset to a default preset if empty
-        } else {
-             setAmountError('Please enter a valid number');
+            setAmount(500); // Default fallback
         }
     };
 
-    const displayRazorpay = () => {
-        if (amountError || amount < 100) {
-            alert('Please enter an amount of at least ₹100.'); // Use alert for simplicity in this dev build
-            return;
-        }
+    // Generate UPI Link
+    const upiLink = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${amount}&cu=INR`;
 
-        // =================================================================================
-        // --- Razorpay Configuration ---
-        // IMPORTANT: Replace this with your actual Key ID from your Razorpay account.
-        // See the razorpay_setup_guide.md file for instructions.
-        const razorpayKeyId = 'YOUR_RAZORPAY_KEY_ID';
-        // =================================================================================
-        
-        if (razorpayKeyId === 'YOUR_RAZORPAY_KEY_ID') {
-            alert('Razorpay Key ID is not set. Please follow the setup guide in razorpay_setup_guide.md.');
-            return;
-        }
+    // QR Code API (using a public API for demo purposes - highly reliable)
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
 
-        const options = {
-            key: razorpayKeyId,
-            amount: amount * 100, // Amount in paise
-            currency: "INR",
-            name: "Al-Noor Foundation",
-            description: "Donation for a social cause",
-            image: "/FLOGO.jpg", // Use the actual logo here
-            handler: function (response) {
-                console.log(response);
-                setViewState('success');
-            },
-            prefill: {
-                name: "Donor",
-                email: "donor@example.com",
-                contact: "9999999999",
-            },
-            notes: {
-                address: "Al-Noor Foundation Office",
-            },
-            theme: {
-                color: "#0D47A1",
-            },
-        };
-
-        const paymentObject = new window.Razorpay(options);
-        paymentObject.open();
+    const handlePayment = (app) => {
+        // ideally we would try to open specific schemes, but for PWA/Web, the generic intent often works best
+        window.location.href = upiLink;
     };
-
-    const resetDonation = () => {
-        setViewState('amount_selection');
-        setAmount(500);
-        setCustomAmount('');
-        setAmountError('');
-    };
-
-    const renderAmountSelection = () => (
-         <>
-            <h2 className="text-2xl font-bold mb-6 text-center">Donate Securely</h2>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                
-                <div className="text-center">
-                     <h3 className="text-lg font-semibold text-center mb-4">Scan & Pay with UPI</h3>
-                     <div className="flex justify-center p-2 bg-white rounded-lg shadow-inner">
-                        <img src="/qr-code.jpg" alt="UPI Payment QR Code" className="w-48 h-48 rounded-md" />
-                     </div>
-                     <p className="text-sm mt-2 text-gray-500 dark:text-gray-400">Use any UPI app like GPay, PhonePe, Paytm</p>
-                </div>
-                
-                <div className="md:border-l-2 border-gray-200 dark:border-gray-700 md:pl-8">
-                    <h3 className="text-lg font-semibold text-center mb-4">Or Pay Online</h3>
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                        {presetAmounts.map(preset => (
-                            <button
-                                key={preset}
-                                onClick={() => handleAmountClick(preset)}
-                                className={`p-3 border-2 rounded-lg text-md font-bold transition-colors ${amount === preset && !customAmount ? 'bg-yellow-400 text-black border-yellow-400' : 'hover:bg-yellow-400 hover:text-black hover:border-yellow-400 dark:border-gray-600 dark:hover:border-yellow-400'}`}
-                            >
-                                ₹{preset}
-                            </button>
-                        ))}
-                    </div>
-                    <input
-                        type="number"
-                        placeholder="Or Enter Custom Amount (min ₹100)"
-                        value={customAmount}
-                        onChange={handleCustomAmountChange}
-                        className="w-full p-3 rounded-md modern-input mb-2 text-center"
-                    />
-                    {amountError && <p className="text-red-500 text-sm text-center mb-4">{amountError}</p>}
-                    
-                    <div className="mt-6 text-center">
-                         <button onClick={displayRazorpay} disabled={!!amountError || amount < 100} className="btn btn-primary w-full">
-                            Donate ₹{amount} with Razorpay
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </>
-    );
-    
-    const renderSuccessState = () => (
-        <div className="text-center py-10">
-            <div className="text-6xl text-green-500 mb-4">
-                <i className="fas fa-check-circle"></i>
-            </div>
-            <h2 className="text-2xl font-bold mb-2">Payment Successful!</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">Thank you for your generous donation of ₹{amount}.</p>
-            <button onClick={resetDonation} className="btn btn-secondary">Make Another Donation</button>
-        </div>
-    );
 
     return (
-        <div className="page-container py-24 bg-background">
-            <div className="container mx-auto px-6">
-                <h1 className="section-title">Make a Difference</h1>
-                <p className="section-subtitle">Your donation empowers us to continue our work and bring hope to those who need it most.</p>
-                <FadeInSection>
-                    <div className="max-w-4xl mx-auto bg-card-background p-8 rounded-xl shadow-2xl transition-all duration-500">
-                        {viewState === 'amount_selection' && renderAmountSelection()}
-                        {viewState === 'success' && renderSuccessState()}
+        <div className="page-container py-24 min-h-screen">
+            <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-purple-900/20 to-transparent pointer-events-none"></div>
+
+            <div className="container mx-auto px-4 relative z-10 text-center">
+                <h1 className="section-title mb-2">Make a <span className="text-gradient">Difference</span></h1>
+                <p className="section-subtitle mb-12">Your contribution, directly to those in need. <br /> <span className="text-cyan-400 font-semibold text-sm">SECURE UPI PAYMENT</span></p>
+
+                <div className="flex flex-col lg:flex-row gap-8 max-w-5xl mx-auto">
+
+                    {/* LEFT PANEL: Amount Selection */}
+                    <div className="flex-1 glass-card p-8 text-left">
+                        <div className="mb-8">
+                            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                                <i className="fas fa-hand-holding-dollar text-cyan-400"></i> Select Amount
+                            </h3>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                                {presetAmounts.map(preset => (
+                                    <button
+                                        key={preset}
+                                        onClick={() => handleAmountClick(preset)}
+                                        className={`p-4 rounded-xl font-bold transition-all duration-300 relative overflow-hidden group ${amount === preset && !customAmount ? 'bg-cyan-500/20 border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(0,229,255,0.3)]' : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/30'}`}
+                                        style={{ borderWidth: '1px' }}
+                                    >
+                                        <span className="relative z-10">₹{preset}</span>
+                                        {amount === preset && !customAmount && <div className="absolute inset-0 bg-cyan-400/10 blur-xl"></div>}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <div className="relative">
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">₹</span>
+                                <input
+                                    type="number"
+                                    placeholder="Custom Amount"
+                                    value={customAmount}
+                                    onChange={handleCustomAmountChange}
+                                    className="w-full bg-black/30 border border-white/10 rounded-xl py-4 pl-10 pr-4 text-white placeholder-gray-600 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-all font-bold"
+                                />
+                            </div>
+                            {amountError && <p className="text-red-400 text-sm mt-2">{amountError}</p>}
+                        </div>
+
+                        <div className="border-t border-white/10 pt-6">
+                            <h4 className="text-gray-400 text-sm mb-4 uppercase tracking-wider font-semibold">Pay via App</h4>
+                            <div className="grid grid-cols-1 gap-3">
+                                <button onClick={() => window.location.href = upiLink} className="flex items-center justify-between p-4 rounded-xl bg-[#5f259f] hover:bg-[#4a1c7c] transition-colors group">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#5f259f]"><i className="fas fa-mobile-alt"></i></div>
+                                        <span className="font-bold">PhonePe</span>
+                                    </div>
+                                    <i className="fas fa-arrow-right opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0"></i>
+                                </button>
+                                <button onClick={() => window.location.href = upiLink} className="flex items-center justify-between p-4 rounded-xl bg-[#1a73e8] hover:bg-[#1557b0] transition-colors group">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#1a73e8]"><i className="fab fa-google"></i></div>
+                                        <span className="font-bold">Google Pay</span>
+                                    </div>
+                                    <i className="fas fa-arrow-right opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0"></i>
+                                </button>
+                                <button onClick={() => window.location.href = upiLink} className="flex items-center justify-between p-4 rounded-xl bg-[#00baf2] hover:bg-[#0091be] transition-colors group">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#00baf2]"><i className="fas fa-wallet"></i></div>
+                                        <span className="font-bold">Paytm / BHIM</span>
+                                    </div>
+                                    <i className="fas fa-arrow-right opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </FadeInSection>
+
+                    {/* RIGHT PANEL: QR Code */}
+                    <div className="flex-1 glass-card p-8 flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#151A23] to-[#0B0E14]">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
+
+                        <h3 className="text-xl font-bold mb-8 text-center">Scan to Pay <span className="text-cyan-400">₹{amount}</span></h3>
+
+                        <div className="p-4 bg-white rounded-2xl shadow-[0_0_30px_rgba(0,229,255,0.15)] relative group">
+                            <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition-opacity"></div>
+                            <img src={qrCodeUrl} alt="Donate QR" className="w-64 h-64 relative z-10 rounded-lg" />
+                            {/* Central Logo Overlay for style */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full p-1 shadow-lg z-20 flex items-center justify-center">
+                                <i className="fas fa-heart text-red-500 text-xl"></i>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 text-center">
+                            <p className="text-gray-400 text-sm mb-2">UPI ID</p>
+                            <div className="flex items-center gap-3 bg-black/30 px-4 py-2 rounded-lg border border-white/5">
+                                <code className="text-cyan-300 font-mono tracking-wide">{UPI_ID}</code>
+                                <button className="text-gray-500 hover:text-white transition-colors" onClick={() => navigator.clipboard.writeText(UPI_ID)}>
+                                    <i className="far fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     );
@@ -1002,7 +880,7 @@ const DonatePage = () => {
 
 const EventsPage = ({ onNavigate }) => (
     <div className="page-container py-24">
-         <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6">
             <h1 className="section-title">Events & News</h1>
             <p className="section-subtitle">Stay updated with our latest activities, stories of impact, and upcoming events.</p>
             <FadeInSection>
@@ -1034,8 +912,8 @@ const EventDetailsPage = ({ event, onNavigate }) => (
                     <p><strong>Timings:</strong> {event.details.timings}</p>
                     <p><strong>Venue:</strong> {event.details.venue}</p>
                 </div>
-                 <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
-                <img src="/sweing2.jpg"alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
+                <h2 className="text-2xl font-bold mt-12 mb-4">Glimpses from the Training</h2>
+                <img src="/sweing2.jpg" alt="Training session" className="w-full h-auto object-cover rounded-xl shadow-lg mb-8" />
                 <h2 className="text-2xl font-bold mt-12 mb-4">Certification of Completion</h2>
                 <img src="/certificate.png" alt="Training Certificate" className="w-full h-auto object-cover rounded-xl shadow-lg" />
             </FadeInSection>
@@ -1089,9 +967,9 @@ const ContactPage = () => {
             console.error('EmailJS Error: Please replace the placeholder Service ID, Template ID, and Public Key in the code with your actual keys from your EmailJS account.');
             // We opened WhatsApp, so we can consider this a partial success for the user.
             // We will just reset the form and show a success message that implies the main action worked.
-            setStatus('success'); 
+            setStatus('success');
             setFormData({ name: '', email: '', message: '' });
-            return; 
+            return;
         }
 
         // Check if emailjs script is loaded
@@ -1119,128 +997,167 @@ const ContactPage = () => {
                 setStatus('error'); // Show error only if email fails
             });
     };
-    
+
     const renderFormContent = () => {
         if (status === 'success') {
             return (
                 <div className="text-center flex flex-col items-center justify-center h-full">
-                    <div className="text-5xl text-green-500 mb-4">
+                    <div className="text-5xl text-green-500 mb-4 animate-bounce">
                         <i className="fas fa-check-circle"></i>
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
-                    <p className="text-text-muted">Thank you for reaching out. We have opened WhatsApp for you to send the message directly.</p>
+                    <p className="text-gray-400">Thank you for reaching out. We have opened WhatsApp for you to send the message directly.</p>
                 </div>
             );
         }
 
         if (status === 'error') {
-             return (
+            return (
                 <div className="text-center flex flex-col items-center justify-center h-full">
-                    <div className="text-5xl text-red-500 mb-4">
+                    <div className="text-5xl text-red-500 mb-4 animate-pulse">
                         <i className="fas fa-exclamation-circle"></i>
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Email Failed</h2>
-                    <p className="text-text-muted">Your message was sent to WhatsApp, but the email could not be delivered. Please check your EmailJS keys.</p>
+                    <p className="text-gray-400">Your message was sent to WhatsApp, but the email could not be delivered. Please check your EmailJS keys.</p>
                 </div>
             );
         }
 
         return (
             <>
-                <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
-                <form onSubmit={handleSubmit}>
-                   <div className="grid grid-cols-1 gap-6 mb-6">
-                        <input 
-                            type="text" 
-                            name="name"
-                            placeholder="Your Name" 
-                            className="w-full p-3 rounded-md modern-input" 
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input 
-                            type="email" 
-                            name="email"
-                            placeholder="Your Email" 
-                            className="w-full p-3 rounded-md modern-input"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
+                <h2 className="text-2xl font-bold mb-6 text-white text-center md:text-left">Send us a Message</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 gap-6">
+                        <div className="group">
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Your Name"
+                                className="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-all font-medium"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="group">
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Your Email"
+                                className="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-all font-medium"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
                     </div>
-                    <div className="mb-6">
-                       <textarea 
+                    <div className="group">
+                        <textarea
                             name="message"
-                            placeholder="Your Message" 
-                            rows="5" 
-                            className="w-full p-3 rounded-md modern-input"
+                            placeholder="Your Message"
+                            rows="5"
+                            className="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-all font-medium"
                             value={formData.message}
                             onChange={handleChange}
                             required
-                       ></textarea>
+                        ></textarea>
                     </div>
-                    <div className="text-left">
-                        <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
-                            {status === 'sending' ? (
-                                <>
-                                    <svg className="spinner" viewBox="0 0 50 50">
-                                        <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
-                                    </svg>
-                                    Sending...
-                                </>
-                            ) : (
-                                'Send Message'
-                            )}
-                        </button>
-                    </div>
+                    <button type="submit" className="btn btn-primary w-full shadow-lg hover:shadow-cyan-500/25 transition-all duration-300" disabled={status === 'sending'}>
+                        {status === 'sending' ? (
+                            <span className="flex items-center justify-center gap-2">
+                                <span className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
+                                Sending...
+                            </span>
+                        ) : (
+                            'Send Message'
+                        )}
+                    </button>
                 </form>
             </>
         );
     };
 
     return (
-        <div className="page-container py-24 bg-background">
-            <div className="container mx-auto px-6">
-                <h1 className="section-title">Contact Us</h1>
-                <p className="section-subtitle">We'd love to hear from you. Whether you have a question, suggestion, or just want to say hello, feel free to reach out.</p>
-                <div className="grid md:grid-cols-2 gap-16">
-                     <FadeInSection>
-                        <div className="bg-card-background p-8 rounded-xl shadow-2xl min-h-[480px] flex flex-col justify-center">
-                            {renderFormContent()}
-                        </div>
-                     </FadeInSection>
-                    <FadeInSection delay={100}>
-                        <div>
-                            <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
-                            <p className="mb-4 flex items-start"><i className="fas fa-map-marker-alt mr-3 mt-1 text-cyan-500 dark:text-cyan-400"></i><span>D.No: 1-45, Madinapadu Village,<br/>Dachepalli Mandal, Palnadu District,<br/>Andhra Pradesh, India<br/>pin-522414 </span></p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-phone mr-3 text-cyan-500 dark:text-cyan-400"></i> (+91)7997666551</p>
-                            <p className="mb-4 flex items-center"><i className="fas fa-envelope mr-3 text-cyan-500 dark:text-cyan-400"></i>foundationalnoor@gmail.com</p>
-                            <div className="mt-8">
-                                <h4 className="font-bold mb-4">Follow Us</h4>
-                                <div className="flex space-x-4">
-                                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fab fa-facebook"></i></a>
-                                    <a href="https://youtu.be/D-RrrARZ0_k?feature=shared" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fab fa-youtube"></i></a>
-                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fab fa-instagram"></i></a>
-                                    <a href="https://maps.app.goo.gl/NswGuLBPNjFRVum1A?g_st=ac" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-cyan-500 transition-colors"><i className="fas fa-map-marker-alt"></i></a>
+        <div className="page-container py-24 min-h-screen relative overflow-hidden">
+            {/* Background glow effects */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <h1 className="section-title text-center mb-4">Contact <span className="text-gradient">Us</span></h1>
+                <p className="section-subtitle text-center mb-16 max-w-2xl mx-auto">We'd love to hear from you. Whether you have a question, suggestion, or just want to say hello, feel free to reach out.</p>
+
+                <div className="max-w-6xl mx-auto glass-card p-8 md:p-12 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10">
+                    <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
+                        {/* Form Section */}
+                        <FadeInSection>
+                            <div className="h-full">
+                                {renderFormContent()}
+                            </div>
+                        </FadeInSection>
+
+                        {/* Info Section */}
+                        <FadeInSection delay={100}>
+                            <div className="flex flex-col h-full justify-center space-y-8 md:pl-8 md:border-l border-white/10">
+                                <div>
+                                    <h3 className="text-2xl font-bold mb-6 text-white">Contact Information</h3>
+                                    <div className="space-y-6">
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 text-cyan-400">
+                                                <i className="fas fa-map-marker-alt"></i>
+                                            </div>
+                                            <p className="text-gray-300 leading-relaxed">
+                                                D.No: 1-45, Madinapadu Village,<br />
+                                                Dachepalli Mandal, Palnadu District,<br />
+                                                Andhra Pradesh, India - 522414
+                                            </p>
+                                        </div>
+
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 text-cyan-400">
+                                                <i className="fas fa-phone"></i>
+                                            </div>
+                                            <p className="text-gray-300 font-medium">(+91) 7997666551</p>
+                                        </div>
+
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 text-cyan-400">
+                                                <i className="fas fa-envelope"></i>
+                                            </div>
+                                            <p className="text-gray-300 font-medium">foundationalnoor@gmail.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold mb-4 text-white">Follow Us</h4>
+                                    <div className="flex gap-4">
+                                        {['facebook', 'youtube', 'instagram', 'map-marker-alt'].map((icon, idx) => (
+                                            <a key={idx} href="#" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-white transition-all duration-300 hover:-translate-y-1">
+                                                <i className={`fab fa-${icon === 'map-marker-alt' ? 'google' : icon} ${icon === 'map-marker-alt' ? 'fas fa-map-marker-alt' : ''}`}></i>
+                                            </a>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </FadeInSection>
+                        </FadeInSection>
+                    </div>
                 </div>
+
                 {/* Google Maps Integration */}
                 <FadeInSection>
-                    <div className="mt-16">
-                        <h2 className="section-title">Our Location</h2>
-                        <div className="overflow-hidden rounded-xl shadow-2xl">
-                             <iframe 
+                    <div className="mt-16 max-w-6xl mx-auto glass-card p-4 rounded-3xl">
+                        <div className="overflow-hidden rounded-2xl shadow-lg h-[400px] w-full relative">
+                            <div className="absolute inset-0 bg-cyan-500/10 animate-pulse pointer-events-none z-10 mix-blend-overlay"></div>
+                            <iframe
                                 title="Google Maps Location of Madinapadu Village"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15334.26422055622!2d79.73461865!3d16.5925433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3562c11e742e97%3A0x334b51a4413346d!2sMadinapadu%2C%2BAndhra%2BPradesh!5e0!3m2!1sen!2sin!4v1665412345678!5m2!1sen!2sin"
-                                width="100%" 
-                                height="450" 
-                                style={{ border: 0 }} 
-                                allowFullScreen="" 
-                                loading="lazy" 
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0, filter: 'grayscale(100%) invert(90%) contrast(120%)' }}
+                                allowFullScreen=""
+                                loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade">
                             </iframe>
                         </div>
@@ -1254,7 +1171,7 @@ const ContactPage = () => {
 
 const GalleryPage = ({ onImageClick }) => {
     const [filter, setFilter] = useState('all');
-    
+
     const galleryItems = [
         { id: 1, category: 'education', src: '/education.jpg', alt: 'Children learning in a classroom' },
         { id: 2, category: 'food', src: '/food1.jpg', alt: 'Woman receiving food aid' },
@@ -1267,15 +1184,15 @@ const GalleryPage = ({ onImageClick }) => {
         { id: 9, category: 'community', src: '/food3.jpg', alt: 'A community feeding program event' },
         { id: 10, category: 'community', src: '/backgroundImage.jpg', alt: 'Foundation team group photo' },
     ];
-    
+
     const filteredItems = filter === 'all' ? galleryItems : galleryItems.filter(item => item.category === filter);
-    
+
     return (
         <div className="page-container py-24">
             <div className="container mx-auto px-6">
                 <h1 className="section-title">Gallery & Media</h1>
                 <p className="section-subtitle">A glimpse into the moments that define our mission and the lives we've touched.</p>
-                
+
                 <FadeInSection>
                     <div className="flex justify-center space-x-2 md:space-x-4 mb-12">
                         <button onClick={() => setFilter('all')} className={`px-4 py-2 rounded-full font-semibold transition ${filter === 'all' ? 'bg-yellow-400 text-gray-900' : 'bg-gray-700'}`}>All</button>
@@ -1286,13 +1203,21 @@ const GalleryPage = ({ onImageClick }) => {
                     </div>
                 </FadeInSection>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredItems.map((item, index) => (
-                        <FadeInSection key={item.id} delay={index * 100}>
-                            <div className="overflow-hidden rounded-lg shadow-lg cursor-pointer group relative" onClick={() => onImageClick(item.src)}>
-                                <img src={item.src} alt={item.alt} className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110" />
-                                <div className="gallery-item-overlay">
-                                    <i className="fas fa-search-plus"></i>
+                        <FadeInSection key={item.id} delay={index * 50}>
+                            <div className="overflow-hidden rounded-2xl glass-card cursor-pointer group relative aspect-video" onClick={() => onImageClick(item.src)}>
+                                <img src={item.src} alt={item.alt} className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 group-hover:brightness-75" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                    <div>
+                                        <span className="inline-block py-1 px-3 rounded-full bg-cyan-500/80 text-white text-xs font-bold mb-2 uppercase tracking-wide">{item.category}</span>
+                                        <p className="text-white text-sm font-medium">{item.alt}</p>
+                                    </div>
+                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-transform duration-300 delay-100">
+                                            <i className="fas fa-plus"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </FadeInSection>
@@ -1320,7 +1245,7 @@ const ImpactPage = () => (
                             <button className="font-semibold text-cyan-500 hover:text-cyan-600 dark:text-cyan-400 dark:hover:text-cyan-300 bg-transparent border-none p-0">Download PDF <i className="fas fa-download ml-1"></i></button>
                         </div>
                     </div>
-                     {/* Report Card */}
+                    {/* Report Card */}
                     <div className="bg-card-background p-6 rounded-xl shadow-lg flex items-center space-x-6 card-hover">
                         <i className="fas fa-file-invoice-dollar text-5xl text-green-500"></i>
                         <div>
@@ -1332,7 +1257,7 @@ const ImpactPage = () => (
                 </div>
             </FadeInSection>
 
-             <FadeInSection>
+            <FadeInSection>
                 <div className="max-w-4xl mx-auto bg-card-background p-8 mt-16 rounded-xl shadow-2xl">
                     <h2 className="text-2xl font-bold mb-4 text-center">Fund Utilization 2024</h2>
                     <img src="https://placehold.co/800x400/cccccc/333333?text=Pie+Chart+of+Fund+Utilization" alt="Fund Utilization Chart" className="w-full h-auto rounded-md" />
@@ -1355,7 +1280,7 @@ const FAQPage = () => {
             <div className="container mx-auto px-6">
                 <h1 className="section-title">Frequently Asked Questions</h1>
                 <p className="section-subtitle">Find answers to common questions about our foundation, donations, and how to get involved.</p>
-                
+
                 <FadeInSection>
                     <div className="max-w-3xl mx-auto space-y-4">
                         {faqs.map((faq, index) => (
@@ -1398,9 +1323,9 @@ const Lightbox = ({ src, onClose }) => {
 
 const Header = ({ currentPage, onNavigate }) => { // onThemeToggle, user, onLogout removed
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-    
+
     const [isSticky, setIsSticky] = useState(false);
-    
+
     useEffect(() => {
         const handleScroll = () => {
             setIsSticky(window.scrollY > 50);
@@ -1410,14 +1335,14 @@ const Header = ({ currentPage, onNavigate }) => { // onThemeToggle, user, onLogo
     }, []);
 
     const navItems = ['home', 'about', 'programs', 'gallery', 'events', 'involved', 'contact'];
-    
+
     const handleNav = (page) => {
         onNavigate(page);
         setMobileMenuOpen(false);
     };
-    
+
     const getNavItemName = (item) => {
-        switch(item) {
+        switch (item) {
             case 'home': return 'Home';
             case 'about': return 'About Us';
             case 'programs': return 'Services';
@@ -1430,29 +1355,66 @@ const Header = ({ currentPage, onNavigate }) => { // onThemeToggle, user, onLogo
     }
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isSticky ? 'shadow-lg bg-gray-800/80 backdrop-blur-lg' : ''}`}>
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+        <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b border-transparent ${isSticky ? 'bg-[#0B0E14]/80 backdrop-blur-xl border-white/5 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.5)]' : 'py-6 bg-transparent'}`}>
+            <nav className="container mx-auto px-6 flex justify-between items-center">
                 <div className="flex items-center">
-                    <button onClick={(e) => { e.preventDefault(); handleNav('home'); }} className="text-2xl font-bold mr-10 bg-transparent border-none p-0 text-yellow-400">
-                        Al-Noor <span className="text-white">Foundation</span>
+                    <button onClick={(e) => { e.preventDefault(); handleNav('home'); }} className="group relative z-50">
+                        <div className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:to-cyan-300 transition-all duration-300">
+                            Al-Noor <span className="font-light text-white group-hover:text-gray-200">Foundation</span>
+                        </div>
+                        <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-300"></div>
                     </button>
-                    <div className="hidden lg:flex items-center">
+
+                    <div className="hidden lg:flex items-center ml-12 space-x-1 p-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-sm">
                         {navItems.map(item => (
-                            <button key={item} onClick={(e) => { e.preventDefault(); handleNav(item); }} className={`nav-link capitalize ${currentPage === item ? 'active' : ''}`}>{getNavItemName(item)}</button>
+                            <button
+                                key={item}
+                                onClick={(e) => { e.preventDefault(); handleNav(item); }}
+                                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 relative overflow-hidden group ${currentPage === item ? 'text-black' : 'text-gray-300 hover:text-white'}`}
+                            >
+                                {currentPage === item && (
+                                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-cyan-500 rounded-full shadow-[0_0_20px_rgba(0,229,255,0.4)]"></div>
+                                )}
+                                <span className="relative z-10">{getNavItemName(item)}</span>
+                            </button>
                         ))}
                     </div>
                 </div>
+
                 <div className="flex items-center space-x-4">
-                    <button onClick={() => setMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden p-2 rounded-md text-gray-200 hover:bg-gray-700">
-                        <i className="fas fa-bars text-xl"></i>
+                    <button
+                        onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+                        className="lg:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-center gap-1.5 group"
+                    >
+                        <span className={`h-0.5 w-6 bg-white rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2 bg-cyan-400' : 'group-hover:bg-cyan-400'}`}></span>
+                        <span className={`h-0.5 w-6 bg-white rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'group-hover:bg-cyan-400'}`}></span>
+                        <span className={`h-0.5 w-6 bg-white rounded-full transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2 bg-cyan-400' : 'group-hover:bg-cyan-400'}`}></span>
                     </button>
                 </div>
             </nav>
-            {/* Mobile Menu */}
-            <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} lg:hidden bg-gray-800 py-4 shadow-lg`}>
-                 {navItems.map(item => (
-                    <button key={item} onClick={(e) => { e.preventDefault(); handleNav(item); }} className="block w-full text-center py-2 capitalize text-gray-200 hover:text-cyan-400 bg-transparent border-none">{getNavItemName(item)}</button>
-                ))}
+
+            {/* Mobile Menu Overlay */}
+            <div className={`fixed inset-0 bg-[#0B0E14]/95 backdrop-blur-2xl z-40 flex flex-col items-center justify-center transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-cyan-500/10 to-purple-500/10 pointer-events-none"></div>
+
+                <div className="flex flex-col space-y-6 text-center z-10 w-full px-6">
+                    {navItems.map((item, index) => (
+                        <button
+                            key={item}
+                            onClick={(e) => { e.preventDefault(); handleNav(item); }}
+                            className={`text-2xl font-light text-white tracking-wider hover:text-cyan-400 transition-all duration-300 py-2 border-b border-white/5 hover:border-cyan-400/50 hover:pl-4 ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                            style={{ transitionDelay: `${index * 50}ms` }}
+                        >
+                            {getNavItemName(item)}
+                        </button>
+                    ))}
+
+                    <div className="pt-8">
+                        <button onClick={() => handleNav('donate')} className="btn btn-primary w-full py-4 text-xl shadow-[0_0_30px_rgba(0,229,255,0.3)]">
+                            <i className="fas fa-heart mr-2"></i> Donate Now
+                        </button>
+                    </div>
+                </div>
             </div>
         </header>
     );
@@ -1463,24 +1425,36 @@ const Quotations = () => {
         { quote: "The best way to find yourself is to lose yourself in the service of others.", author: "Mahatma Gandhi" },
         { quote: "We make a living by what we get, but we make a life by what we give.", author: "Winston Churchill" },
         { quote: "No one has ever become poor by giving.", author: "Anne Frank" },
-        { quote: "The purpose of life is not to be happy. It is to be useful, to be honorable, to be compassionate, to have it make some difference that you have lived and lived well.", author: "Ralph Waldo Emerson"},
-        { quote: "Only a life lived for others is a life worthwhile.", author: "Albert Einstein"},
-        { quote: "Service to others is the rent you pay for your room here on Earth.", author: "Muhammad Ali"}
+        { quote: "Service to others is the rent you pay for your room here on Earth.", author: "Muhammad Ali" }
     ];
 
-    const duplicatedQuotes = [...quotes, ...quotes];
-
     return (
-        <section className="py-24 bg-card-background quotations-container">
-            <h2 className="section-title">Inspirational Quotations</h2>
-            <p className="section-subtitle">Words that inspire us to serve humanity.</p>
-            <div className="quotations-track">
-                {duplicatedQuotes.map((q, index) => (
-                     <div key={index} className="quote-card">
-                         <p className="text-xl italic mb-4 text-text-muted">"{q.quote}"</p>
-                         <p className="font-semibold text-secondary">- {q.author}</p>
-                     </div>
-                ))}
+        <section className="py-24 relative overflow-hidden">
+            {/* Background elements */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <h2 className="section-title">Inspirational <span className="text-gradient">Quotations</span></h2>
+                <p className="section-subtitle">Words that ignite the spirit of giving.</p>
+
+                <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    {quotes.map((q, index) => (
+                        <FadeInSection key={index} delay={index * 100}>
+                            <div className="glass-card p-8 h-full relative group">
+                                <div className="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-50 transition-opacity">
+                                    <i className="fas fa-quote-right text-6xl text-cyan-400"></i>
+                                </div>
+                                <div className="relative z-10">
+                                    <p className="text-lg md:text-xl font-light leading-relaxed mb-6 text-gray-200">"{q.quote}"</p>
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-0.5 w-8 bg-gradient-to-r from-cyan-400 to-purple-500"></div>
+                                        <p className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 uppercase tracking-widest text-sm">{q.author}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </FadeInSection>
+                    ))}
+                </div>
             </div>
         </section>
     );
@@ -1488,117 +1462,108 @@ const Quotations = () => {
 
 const Footer = ({ onNavigate }) => {
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState('idle'); // idle, sending, success, error
+    const [status, setStatus] = useState('idle');
 
     const handleNewsletterSubmit = (e) => {
         e.preventDefault();
         if (!email) return;
         setStatus('sending');
-
-        // --- EmailJS Configuration for Newsletter ---
-        // IMPORTANT: Replace these with your actual IDs from your EmailJS account.
-        // See the updated email_setup_guide.md file for instructions.
-        const serviceID = 'YOUR_SERVICE_ID';
-        const templateID = 'YOUR_NEWSLETTER_TEMPLATE_ID'; // A NEW template ID for newsletters
-        const userID = 'YOUR_PUBLIC_KEY';
-
-        // Check for placeholder values
-        if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'YOUR_NEWSLETTER_TEMPLATE_ID' || userID === 'YOUR_PUBLIC_KEY') {
-            console.error('EmailJS Newsletter Error: Please configure your EmailJS keys and the new newsletter template ID.');
-            setStatus('error');
-            setTimeout(() => setStatus('idle'), 4000);
-            return;
-        }
-
-        // Check if emailjs script is loaded
-        if (!window.emailjs) {
-            console.error('EmailJS script has not loaded yet.');
-            setStatus('error');
-            setTimeout(() => setStatus('idle'), 4000);
-            return;
-        }
-
-        const templateParams = {
-            subscriber_email: email,
-            to_email: 'shaikabdulla1199@gmail.com'
-        };
-
-        window.emailjs.send(serviceID, templateID, templateParams, userID)
-            .then(() => {
-                setStatus('success');
-                setEmail('');
-                setTimeout(() => setStatus('idle'), 4000);
-            }, (err) => {
-                console.error('Failed to send newsletter email.', err);
-                setStatus('error');
-                setTimeout(() => setStatus('idle'), 4000);
-            });
+        // Placeholder simulation for UI demo
+        setTimeout(() => setStatus('success'), 1500);
+        setTimeout(() => setStatus('idle'), 4000);
     };
 
     const getButtonContent = () => {
         switch (status) {
-            case 'sending':
-                return (
-                    <svg className="spinner-small" viewBox="0 0 50 50">
-                        <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
-                    </svg>
-                );
-            case 'success':
-                return <i className="fas fa-check text-green-500"></i>;
-            case 'error':
-                 return <i className="fas fa-times text-red-500"></i>;
-            default:
-                return 'Go';
+            case 'sending': return <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>;
+            case 'success': return <i className="fas fa-check"></i>;
+            case 'error': return <i className="fas fa-times"></i>;
+            default: return <i className="fas fa-paper-plane"></i>;
         }
     };
 
     return (
-        <footer className="bg-gray-800 dark:bg-black text-gray-300">
-            <div className="container mx-auto px-6 py-12">
-                <div className="grid md:grid-cols-4 gap-8">
-                    <div>
-                        <h3 className="text-lg font-bold text-white mb-4">Al-Noor Foundation</h3>
-                        <p className="text-sm">Serving Humanity, Spreading Light.</p>
+        <footer className="relative bg-[#05070a] border-t border-white/5 pt-20 pb-10 overflow-hidden">
+            {/* Background Glows */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <div className="grid md:grid-cols-12 gap-12 mb-16">
+                    {/* Brand Section */}
+                    <div className="md:col-span-12 lg:col-span-4">
+                        <div className="flex items-center gap-3 mb-6">
+                            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Al-Noor Foundation</h2>
+                        </div>
+                        <p className="text-gray-400 leading-relaxed mb-8 max-w-sm">
+                            Igniting hope and creating sustainable change. We believe in the power of collective compassion to transform lives.
+                        </p>
+                        <div className="flex gap-4">
+                            {['facebook-f', 'twitter', 'instagram', 'linkedin-in'].map((icon, idx) => (
+                                <a key={idx} href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-cyan-500 hover:text-white border border-white/10 hover:border-cyan-500 flex items-center justify-center transition-all duration-300 group">
+                                    <i className={`fab fa-${icon} text-gray-400 group-hover:text-white`}></i>
+                                </a>
+                            ))}
+                        </div>
                     </div>
-                    <div>
-                        <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><button onClick={(e) => {e.preventDefault(); onNavigate('about')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">About Us</button></li>
-                            <li><button onClick={(e) => {e.preventDefault(); onNavigate('programs')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Our Work</button></li>
-                            <li><button onClick={(e) => {e.preventDefault(); onNavigate('gallery')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Gallery</button></li>
-                            <li><button onClick={(e) => {e.preventDefault(); onNavigate('faq')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">FAQ</button></li>
+
+                    {/* Links Column 1 */}
+                    <div className="md:col-span-4 lg:col-span-2">
+                        <h3 className="text-white font-bold mb-6 text-lg tracking-wide">Explore</h3>
+                        <ul className="space-y-4">
+                            {['About Us', 'Our Work', 'Gallery', 'FAQ'].map((item) => (
+                                <li key={item}>
+                                    <button onClick={() => onNavigate(item.toLowerCase().replace(' ', ''))} className="text-gray-400 hover:text-cyan-400 transition-colors text-sm font-medium flex items-center gap-2 group">
+                                        <span className="w-1 h-1 bg-cyan-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                        {item}
+                                    </button>
+                                </li>
+                            ))}
                         </ul>
                     </div>
-                     <div>
-                        <h3 className="text-lg font-bold text-white mb-4">Get Involved</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><button onClick={(e) => {e.preventDefault(); onNavigate('involved')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Volunteer</button></li>
-                            <li><button onClick={(e) => {e.preventDefault(); onNavigate('events')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Events</button></li>
-                            <li><button onClick={(e) => {e.preventDefault(); onNavigate('contact')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Contact</button></li>
-                             <li><button onClick={(e) => {e.preventDefault(); onNavigate('terms')}} className="hover:text-yellow-400 bg-transparent border-none p-0 text-left">Terms & Conditions</button></li>
+
+                    {/* Links Column 2 */}
+                    <div className="md:col-span-4 lg:col-span-2">
+                        <h3 className="text-white font-bold mb-6 text-lg tracking-wide">Involved</h3>
+                        <ul className="space-y-4">
+                            {['Volunteer', 'Donate', 'Events', 'Contact'].map((item) => (
+                                <li key={item}>
+                                    <button onClick={() => onNavigate(item.toLowerCase())} className="text-gray-400 hover:text-cyan-400 transition-colors text-sm font-medium flex items-center gap-2 group">
+                                        <span className="w-1 h-1 bg-cyan-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                        {item}
+                                    </button>
+                                </li>
+                            ))}
                         </ul>
                     </div>
-                    <div>
-                        <h3 className="text-lg font-bold text-white mb-4">Newsletter</h3>
-                        <p className="text-sm mb-4">Subscribe to get our latest updates.</p>
-                        <form className="flex" onSubmit={handleNewsletterSubmit}>
-                            <input
-                                type="email"
-                                placeholder="Your Email"
-                                className="w-full p-2 rounded-l-md text-gray-800 focus:outline-none"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                disabled={status !== 'idle'}
-                            />
-                            <button type="submit" className="bg-yellow-400 text-gray-900 px-4 rounded-r-md font-bold hover:bg-yellow-500 flex items-center justify-center w-20" disabled={status === 'sending'}>
-                                {getButtonContent()}
-                            </button>
-                        </form>
+
+                    {/* Newsletter */}
+                    <div className="md:col-span-12 lg:col-span-4">
+                        <div className="glass-card p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02]">
+                            <h3 className="text-white font-bold mb-2 text-lg">Detailed Updates</h3>
+                            <p className="text-gray-400 text-sm mb-4">Subscribe to our weekly newsletter for impact stories.</p>
+                            <form onSubmit={handleNewsletterSubmit} className="relative">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500 transition-colors"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-black hover:bg-cyan-400 transition-colors">
+                                    {getButtonContent()}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div className="mt-12 border-t border-gray-700 pt-6 text-center text-sm">
-                    <p>&copy; 2025 Al-Noor Foundation. All Rights Reserved.</p>
+
+                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p className="text-gray-500 text-sm">© 2025 Al-Noor Foundation. All rights reserved.</p>
+                    <div className="flex gap-6">
+                        <button onClick={() => onNavigate('privacy')} className="text-gray-500 hover:text-white text-sm transition-colors">Privacy Policy</button>
+                        <button onClick={() => onNavigate('terms')} className="text-gray-500 hover:text-white text-sm transition-colors">Terms of Service</button>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -1611,10 +1576,10 @@ const TermsPage = () => (
             <h1 className="section-title">Terms and Conditions</h1>
             <div className="prose dark:prose-invert lg:prose-xl mx-auto space-y-4 text-text-muted">
                 <p>Welcome to Al-Noor Foundation. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern Al-Noor Foundation's relationship with you in relation to this website.</p>
-                
+
                 <h2>1. Intellectual Property Rights</h2>
                 <p>Other than the content you own, under these Terms, Al-Noor Foundation and/or its licensors own all the intellectual property rights and materials contained in this Website. You are granted limited license only for purposes of viewing the material contained on this Website.</p>
-                
+
                 <h2>2. Restrictions</h2>
                 <p>You are specifically restricted from all of the following: publishing any Website material in any other media; selling, sublicensing and/or otherwise commercializing any Website material; publicly performing and/or showing any Website material; using this Website in any way that is or may be damaging to this Website; using this Website in any way that impacts user access to this Website; using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity.</p>
 
@@ -1642,10 +1607,10 @@ const PrivacyPolicyPage = () => (
             <h1 className="section-title">Privacy Policy</h1>
             <div className="prose dark:prose-invert lg:prose-xl mx-auto space-y-4 text-text-muted">
                 <p>Your privacy is important to us. It is Al-Noor Foundation's policy to respect your privacy regarding any information we may collect from you across our website.</p>
-                
+
                 <h2>1. Information we collect</h2>
                 <p>We only ask for personal information when we truly need it to provide a service to you (for example, when processing a donation or registering you as a volunteer). We collect it by fair and lawful means, with your knowledge and consent.</p>
-                
+
                 <h2>2. How we use your information</h2>
                 <p>We use the information we collect to operate and maintain our website, process your donations, send you receipts and thank-you notes, and communicate with you about our work. We will not share your personal information with any third-party, except as required by law.</p>
 
@@ -1697,7 +1662,7 @@ export default function App() {
     useEffect(() => {
         // Force dark theme permanently
         document.documentElement.className = 'dark';
-        
+
         // Simulate app loading
         const timer = setTimeout(() => setLoading(false), 1000);
         return () => clearTimeout(timer);
@@ -1734,24 +1699,24 @@ export default function App() {
             default: return <HomePage onNavigate={handleNavigate} />;
         }
     };
-    
+
     return (
         <>
             <GlobalStyles />
             <Preloader loading={loading} />
             <Lightbox src={lightboxImage} onClose={() => setLightboxImage(null)} />
             <div className="bg-background">
-                <Header 
+                <Header
                     currentPage={currentPage}
                     onNavigate={handleNavigate}
                 />
                 <main className="pt-20">
                     {renderPage()}
                 </main>
-                <button onClick={() => handleNavigate('home')} className="fixed bottom-5 left-5 btn btn-secondary shadow-lg z-30 w-14 h-14 !p-0">
+                <button onClick={() => handleNavigate('home')} className="btn btn-secondary shadow-lg z-30 w-14 h-14 !p-0 fixed-floating-btn floating-left">
                     <i className="fas fa-home text-xl"></i>
                 </button>
-                <button onClick={() => handleNavigate('donate')} className="fixed bottom-5 right-5 btn btn-primary shadow-lg flex items-center space-x-2 z-30">
+                <button onClick={() => handleNavigate('donate')} className="btn btn-primary shadow-lg flex items-center space-x-2 z-30 fixed-floating-btn floating-right">
                     <i className="fas fa-heart"></i>
                     <span>Donate</span>
                 </button>
