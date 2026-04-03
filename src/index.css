@@ -1,13 +1,246 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+/* Fallback CDN link for reliability */
+@import url('https://use.fontawesome.com/releases/v6.5.1/css/all.css');
+
+:root {
+    /* High-End International NGO Theme - Premium Gray Edition */
+    --color-primary: #0f3d2e;     /* Deep Emerald/Forest Green */
+    --color-accent: #d4af37;      /* Noble Gold */
+    --color-secondary: #065F46;   /* Rich Green */
+    
+    --color-bg-light: #f1f5f9;    /* Updated Premium Light Gray Background */
+    --color-bg-card: #ffffff;     /* White for cards */
+    --color-bg-dark: #e2e8f0;     /* Light gray sections */
+    
+    --color-text-main: #0f172a;   /* Dark Slate text */
+    --color-text-muted: #64748b;  /* Slate for secondary text */
+    
+    --glass-bg: rgba(28, 31, 36, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --premium-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.5);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, .section-title {
+    font-family: 'Playfair Display', serif;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #064E3B;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary);
+}
+
+/* UTILITIES */
+.text-gradient {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-background {
+    background-color: var(--color-bg-dark);
+}
+
+/* BUTTONS */
+.btn {
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 10px 20px -5px rgba(15, 61, 46, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -10px rgba(15, 61, 46, 0.4);
+    background: var(--color-secondary);
+}
+
+.btn-secondary {
+    background: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--color-primary);
+    color: #ffffff;
+    transform: translateY(-3px);
+}
+
+.btn-accent {
+    background: var(--color-accent);
+    color: #000000;
+    box-shadow: 0 10px 20px -5px rgba(212, 175, 55, 0.3);
+}
+
+.btn-accent:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.4);
+    filter: brightness(1.1);
+}
+
+/* FORM SUBMIT HOVERS */
+button[type="submit"] {
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    filter: brightness(1.1);
+    letter-spacing: 1px;
+}
+
+/* IMAGE HOVERS */
+.hover-pull {
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+}
+.hover-pull:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* SECTIONS */
+.section-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-main);
+    letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--color-text-muted);
+    max-width: 700px;
+    margin: 0 auto 5rem;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+/* GLASS CARDS */
+.glass-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glass-card:hover {
+    transform: translateY(-15px);
+    box-shadow: var(--premium-shadow);
+}
+
+/* ANIMATIONS */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.5, 0, 0, 1), transform 1s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* CUSTOM LOADER */
+#preloader {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.loader-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px; height: 80px;
+}
+
+.loader-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px; height: 64px;
+    margin: 8px;
+    border: 8px solid var(--color-primary);
+    border-radius: 50%;
+    animation: loader-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: var(--color-primary) transparent transparent transparent;
+}
+
+@keyframes loader-ring {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Page Transitions */
+.page-container {
+    animation: fadeInPage 0.6s ease-out;
+}
+
+@keyframes fadeInPage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Floating Navigation Buttons */
+.fixed-floating-btn {
+    position: fixed;
+    bottom: 2rem;
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+}
+
+.floating-left { left: 2rem; }
+.floating-right { right: 2rem; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-title { font-size: 2.5rem; }
+    .section-subtitle { font-size: 1.1rem; }
 }
