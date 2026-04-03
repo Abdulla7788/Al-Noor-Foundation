@@ -13,7 +13,7 @@ const InvolvedPage = () => {
         // Sensitive data (Email, Phone) is handled via secure POST to backend.
         // We only show Name and Interest in the URL for security.
         const whatsappMsg = `Hi, I am ${formData.name}. I am applying to volunteer for: ${formData.interest}. Please check the official records for my application.`;
-        window.open(`https://wa.me/917997666552?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
+        window.open(`https://wa.me/917997666551?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
     };
 
     return (

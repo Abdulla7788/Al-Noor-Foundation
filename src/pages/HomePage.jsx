@@ -50,10 +50,10 @@ const HomePage = ({ onNavigate }) => {
                                 </div>
                                 <h3 className="text-[11px] font-black text-white uppercase tracking-[0.4em]">Urgent Campaign</h3>
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-black text-black leading-tight">Clean Water for <br/>Madinapadu Village</h2>
+                            <h2 className="text-4xl md:text-5xl font-black text-black leading-tight">Clean Water for <br/>Villages</h2>
                         </div>
                         <div className="text-center md:text-right z-10 relative">
-                            <p className="text-black/80 mb-10 text-lg max-w-sm ml-auto font-black italic">Target: ₹2.5 Lakhs | Raised: ₹1.2 Lakhs</p>
+
                             <button onClick={() => onNavigate('donate')} className="bg-white text-primary hover:bg-black hover:text-white px-12 py-5 text-lg rounded-[2rem] transition-all shadow-xl font-black flex items-center justify-center gap-3 ml-auto">
                                 Donate Now <i className="fa-solid fa-tint"></i>
                             </button>

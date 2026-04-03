@@ -17,7 +17,7 @@ import TermsPage from './pages/TermsPage';
 import { PrivacyPolicyPage, RefundPolicyPage, ShippingPolicyPage } from './pages/Policies';
 import InvolvedPage from './pages/InvolvedPage';
 import VolunteersPage from './pages/VolunteersPage';
-import ReportsPage from './pages/ReportsPage';
+import LegalPage from './pages/LegalPage';
 import ServiceDetailsPage from './pages/ServiceDetailsPage';
 import EventDetailsPage from './pages/EventDetailsPage';
 
@@ -71,8 +71,9 @@ const AppContent = () => {
                     <Route path="/involved" element={<InvolvedPage onNavigate={handleNavigate} />} />
                     <Route path="/volunteer" element={<InvolvedPage onNavigate={handleNavigate} />} />
                     <Route path="/volunteers" element={<VolunteersPage onNavigate={handleNavigate} />} />
-                    <Route path="/reports" element={<ReportsPage onNavigate={handleNavigate} />} />
-                    <Route path="/impact" element={<ReportsPage onNavigate={handleNavigate} />} />
+                    <Route path="/legal" element={<LegalPage onNavigate={handleNavigate} />} />
+                    <Route path="/compliance" element={<LegalPage onNavigate={handleNavigate} />} />
+                    <Route path="/law" element={<LegalPage onNavigate={handleNavigate} />} />
                     <Route path="/terms" element={<TermsPage onNavigate={handleNavigate} />} />
                     <Route path="/privacy" element={<PrivacyPolicyPage onNavigate={handleNavigate} />} />
                     <Route path="/refund" element={<RefundPolicyPage onNavigate={handleNavigate} />} />

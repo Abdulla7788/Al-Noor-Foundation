@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# Al-Noor Foundation | Official Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the digital headquarters of the **Al-Noor Foundation**, a Section 8 non-profit organization dedicated to rural empowerment through sustainable initiatives in education, clean water, and community relief.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🏛️ Vision & Identity
+The Al-Noor Foundation operates with the goal of transforming rural lives in the Palnadu district of Andhra Pradesh. Our digital presence is built on the **"Premium Traditional"** design philosophy, blending deep emerald forest greens (`#0f3d2e`) with high-contrast noble gold (`#d4af37`) to create an atmosphere of trust, institutional integrity, and warmth.
 
-### `npm start`
+## 🛠️ Technical Stack
+- **Frontend Architecture**: React 19 (Hooks-driven)
+- **Visual Foundation**: Custom CSS Architecture (Premium Design System)
+- **Styling Utility**: Tailwind CSS (Optimized Layouts)
+- **Iconography**: Font Awesome 6 Pro
+- **Typography**: Playfair Display (Serif) & Inter (Sans)
+- **Backend (Operations)**: PHP & SQL (Humanitarian Asset Management)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📂 Project Architecture
+- `src/`: Unified React frontend source
+- `public/`: High-resolution humanitarian media & verification assets
+- `php/`: Backend transaction processing & donor coordination
+- `backend/`: Database configuration & structural SQL schemas
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🚀 Deployment & Operations
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Local Development
+1. Clone the repository.
+2. Install dependencies: `npm install`
+3. Launch development environment: `npm start`
 
-### `npm run build`
+### Production Build
+To generate an optimized, performant production bundle:
+`npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ⚖️ Governance & Compliance
+This project is maintained under strict regulatory adherence. For legal disclosures, including our Section 8 designation and 80G tax status, please refer to the [Legal & Compliance](https://alnoortrust.org/legal) portal within the application.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+**Institutional Contact:** foundationalnoor77@gmail.com
+**Head Office:** Madinapadu Village, Dachepalli Mandal, Palnadu.
+*© 2025 Al-Noor Foundation. All Rights Reserved.*

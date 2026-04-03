@@ -20,12 +20,11 @@ const Footer = ({ onNavigate }) => {
                         </p>
                         <div className="flex items-center gap-4">
                             {[
-                                { icon: 'facebook-f', color: '#1877F2' },
-                                { icon: 'instagram', color: '#E4405F' },
-                                { icon: 'twitter', color: '#1DA1F2' },
-                                { icon: 'whatsapp', color: '#25D366' }
+                                { icon: 'instagram', color: '#E4405F', url: 'https://www.instagram.com/foundationalnoor?igsh=MWhibDg4Y3g4ZXltbQ==' },
+                                { icon: 'whatsapp', color: '#25D366', url: 'https://wa.me/917997666551' },
+                                { icon: 'youtube', color: '#FF0000', url: 'https://youtube.com/@alnoorfoundation-q5v?si=J6kSJsnI37uef_WY' }
                             ].map((social, i) => (
-                                <a key={i} href="#" className="w-12 h-12 rounded-[1rem] bg-white/[0.03] border border-white/10 flex items-center justify-center text-accent hover:bg-accent hover:text-black hover:-translate-y-2 transition-all duration-500 shadow-2xl group">
+                                <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-[1rem] bg-white/[0.03] border border-white/10 flex items-center justify-center text-accent hover:bg-accent hover:text-black hover:-translate-y-2 transition-all duration-500 shadow-2xl group">
                                     <i className={`fab fa-${social.icon} text-lg`}></i>
                                 </a>
                             ))}
@@ -48,7 +47,7 @@ const Footer = ({ onNavigate }) => {
                     <div>
                         <h4 className="text-white font-black uppercase text-[10px] tracking-[0.4em] mb-10">Compliance</h4>
                         <ul className="space-y-4">
-                            {['Terms', 'Privacy', 'Refund', 'Reports', 'Legal'].map(link => (
+                            {['Terms', 'Privacy', 'Refund', 'Legal'].map(link => (
                                 <li key={link}>
                                     <button onClick={() => onNavigate(link.toLowerCase())} className="text-gray-400 hover:text-accent font-bold text-sm tracking-wide transition-colors">
                                         {link}

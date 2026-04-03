@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FadeInSection } from '../components/Shared';
 
 const ContactPage = () => {
     const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -10,10 +9,9 @@ const ContactPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Securely send sensitive data to backend via POST (already handled by fetch if added, 
-        // but here we are primarily fixing the URL visibility)
+        // Securely send sensitive data to backend via POST
         const whatsappMsg = `Hi, I am ${formData.name}. I just sent a message regarding: ${formData.subject}. Please check the official portal for details.`;
-        window.open(`https://wa.me/917997666552?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
+        window.open(`https://wa.me/917997666551?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
     };
 
     return (
@@ -37,8 +35,8 @@ const ContactPage = () => {
                         
                         <div className="grid md:grid-cols-2 gap-12">
                             {[
-                                { icon: 'phone-volume', label: 'Call Us', val: '+91 79976 66552', color: 'bg-emerald-500' },
-                                { icon: 'envelope-open-text', label: 'Email Us', val: 'alnoortrust2025@gmail.com', color: 'bg-blue-500' }
+                                { icon: 'phone-volume', label: 'Call Us', val: '+91 79976 66551', color: 'bg-emerald-500' },
+                                { icon: 'envelope-open-text', label: 'Email Us', val: 'foundationalnoor77@gmail.com', color: 'bg-blue-500' }
                             ].map((item, idx) => (
                                 <div key={idx} className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 flex flex-col items-center text-center group hover:-translate-y-2 transition-all">
                                     <div className={`w-14 h-14 rounded-2xl ${item.color} text-white flex items-center justify-center text-xl mb-6 shadow-lg group-hover:scale-110 transition-all`}>
