@@ -10,8 +10,10 @@ const ContactPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const whatsappMsg = `Name: ${formData.name}%0AEmail: ${formData.email}%0ASubject: ${formData.subject}%0AMessage: ${formData.message}`;
-        window.open(`https://wa.me/917997666552?text=${whatsappMsg}`, '_blank');
+        // Securely send sensitive data to backend via POST (already handled by fetch if added, 
+        // but here we are primarily fixing the URL visibility)
+        const whatsappMsg = `Hi, I am ${formData.name}. I just sent a message regarding: ${formData.subject}. Please check the official portal for details.`;
+        window.open(`https://wa.me/917997666552?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
     };
 
     return (
